@@ -16,10 +16,13 @@ If you find this project helpful, you can support my work with a small donation.
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-yellow.svg)](https://www.buymeacoffee.com/yourusername)
 -->
-[![alt text][http://i.imgur.com/tXSoThF.png]]
+![alt text][http://i.imgur.com/tXSoThF.png]]
+
+^https://(www\.)?instagram\.com/[^/?]+/?$
 
 # 📂 Folder list:
 Here there is a description for each sub-folders in this repository:
+
 ###💡 Hardware & Sensor Projects
 - ### **💻 Control GPIOs from a website**
   This project involves creating a web-based interface to remotely control the Raspberry Pi's General Purpose Input/Output (GPIO) pins. It's a foundational skill for building web-controlled home automation projects. It's a perfect entry point for beginners because it combines hardware (GPIOs) with software (web development), demonstrating the core capabilities of the Raspberry Pi. It's a stepping stone to countless other projects.
