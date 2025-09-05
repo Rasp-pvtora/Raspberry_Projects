@@ -4,14 +4,17 @@ This is an open source repository that contains projects made for a raspberry.
 
 ### 🪙 Donations are Welcome!
 If you find this project helpful, you can support my work with a small donation. 
-₿ Bitcoin donation: bc1q...
 
-Donations help me continue to improve this project. Thank you for your support!
+₿ Bitcoin donation: bc1q...
+<!--  Donations help me continue to improve this project. Thank you for your support!  -->
+
+<!-- 
 <p align="center">
   <img src="path/to/your/btc-qr-code.png" alt="Bitcoin QR Code" width="150">
 </p>
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-yellow.svg)](https://www.buymeacoffee.com/yourusername)
+-->
 
 # 📂 Folder list:
 Here there is a description for each sub-folders in this repository:
@@ -25,7 +28,8 @@ Here there is a description for each sub-folders in this repository:
 
 
 ![Banner image](https://img.freepik.com/free-photo/front-close-view-fresh-red-raspberries-mellow-sour-all-white-surface_140725-19913.jpg)
-[This is a hidden comment]: # ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+<!-- 
+![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
 # n8n - Secure Workflow Automation for Technical Teams
 
@@ -122,3 +126,4 @@ n8n is the company behind n8n, the product. We're building a workflow automation
 - 🌱 We were Sequoia's first seed investment in Germany, and recently raised a $55m Series B round, led by Highland Capital
 
 We're on a mission to give technical people the powers of a 10x developer. [Join us!](https://n8n.io/careers)
+-->
