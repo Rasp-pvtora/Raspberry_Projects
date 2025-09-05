@@ -20,28 +20,60 @@ If you find this project helpful, you can support my work with a small donation.
 # 📂 Folder list:
 Here there is a description for each sub-folders in this repository:
 
-### 💡Home & IoT Automation Projects
+## 🧠 Smart & Security Projects
+- ### **🗣️ Set Up ALEXA with Amazon Voice Service**
+  Using the Alexa Voice Service API to turn the Raspberry Pi into a custom Alexa smart speaker. It's a great way to explore voice-activated assistants.
+  <!--  Interest score = 8/10  -->
+- ### **📷 AI-Powered Security Camera**
+  Building a security camera that uses machine learning to perform advanced tasks like object or facial recognition. The camera can be programmed to only send notifications when a person or a specific object is detected, reducing false alarms.
+  <!--  Interest score = 10/10  -->
+- ### **🛂 RFID RC522 + MySQL Integration**
+  An advanced version of the basic RFID project that logs data from RFID reads into a database for more complex management. It's a great way to learn about databases and data logging, as it combines hardware with a server-side application. Is possibile to use the functionality to build a secure, keyless entry system for a door or a small cabinet.
+  <!--  Interest score = 9/10  -->
+- ### **🗄️ NAS-Pi Storage Server with OpenMediaVault**
+  Turning the Raspberry Pi into a Network-Attached Storage (NAS) device for file sharing and backup. It's a powerful and cost-effective way to create a personal cloud storage solution.
+  <!--  Interest score = 10/10  -->
+- ### **🔐 Encrypt & Decrypt Files with Security Keys**
+  A security-focused project that uses the Pi to encrypt and decrypt files with a hardware security key.
+  <!--  Interest score = 10/10  -->
+- ### **🕵️ Secure Raspberry Pi Zero W VPN Server**
+  Turn a Raspberry Pi Zero W into a compact and low-power VPN server. This allows you to create a secure tunnel to your home network, so you can safely access your files and browse the internet securely when you're away from home.
+  <!--  Interest score = 9/10  -->
+- ### **🔔 Doorbell with Facial Recognition**
+  Upgrade a standard doorbell with a Raspberry Pi camera and facial recognition software. The system can identify known individuals and send different notifications or trigger different actions based on who is at the door. A possibility to save a photo and send as message on the phone is added. Is also possible to listen remotly or even speak (example talk with the postman to give detailed informations on live)
+  <!--  Interest score = 10/10  -->
+- ### **🖼️ Digital Photo Frame with Facial Recognition**
+  A more advanced digital photo frame that uses facial recognition to show photos of the people currently in the room. The Pi's camera detects who is present and cycles through relevant photo albums on the screen. This will make feel your guest more warm in your apartment showing them the best moment you already spent together!
+  <!--  Interest score = 7/10  -->
+  
+## 💡Home & IoT Automation Projects
 - ### **💻 Control GPIOs from a website**
   This project involves creating a web-based interface to remotely control the Raspberry Pi's General Purpose Input/Output (GPIO) pins. It's a foundational skill for building web-controlled home automation projects. It's a perfect entry point for beginners because it combines hardware (GPIOs) with software (web development), demonstrating the core capabilities of the Raspberry Pi. It's a stepping stone to countless other projects.
   <!--  Interest score = 9/10  -->
+- ### **🥦 Build your own Green-House**
+  A comprehensive project that automates the monitoring and control of a small greenhouse. It includes sensors for temperature, humidity, and soil moisture, as well as actuators for watering, ventilation, light intensity and if mounted light lift-motor. It's a perfect example of a practical IoT application that combines multiple hardware components and programming concepts.
+  <!--  Interest score = 10/10  -->
+- ### **🚪 Smart Garage Door Opener**
+  Control your garage door remotely with a Raspberry Pi and a relay. This project allows you to open and close your garage from anywhere using a smartphone app or a web interface. You can also add a sensor to check the door's status and receive notifications if it's left open.
+  <!--  Interest score = 9/10  -->
+- ### **🐶 Smart Pet Feeder**
+  Build a motorized pet feeder controlled by a Raspberry Pi. The feeder can be programmed to dispense food at specific times or water if the level is too low. Can be monitored remotely and is possible also to add a camera to check on your pet.
+  <!--  Interest score = 10/10  -->
 - ### **📷 Send and email with attachment (photo or text)**
   A simple project to program the Raspberry Pi to send an email, often triggered by an event like a button press or motion detection, and include an attached photo from a connected camera. This is a very common and practical project. It's a great way to learn about scripting, email protocols (SMTP), and integrating a camera module, making it very popular for security and monitoring applications.
   <!--  Interest score = 8/10  -->
 - ### **🗺️ Real-Time GPS Tracker with Google Maps**
   This project involves building a mobile GPS tracking device using a Raspberry Pi, a GPS module, and a mobile data connection (like a GSM module) to send real-time location data to a web page displaying a Google Maps interface.
   <!--  Interest score = 10/10  -->
-- ### **📲 Control and get notification with Telegram**
+- ### **💬 Control and get notification with Telegram or Whatsapp**
   This project focuses on using the Telegram API to send messages and control the Raspberry Pi. It's often used to receive alerts from sensors or to send commands to the Rasp-Pi from a smartphone. Telegram is a favorite for this kind of project due to its open and user-friendly API, which makes building interactive bots straightforward and reliable.
   <!--  Interest score = 9/10  -->
-- ### **💬 Control and get notification with Whatsapp**
-  A similar concept to the Telegram project, but using the WhatsApp API to send and receive messages.
-  <!--  Interest score = 9/10  -->
-- ### **🥦 Build your own Green-House**\
-  A comprehensive project that automates the monitoring and control of a small greenhouse. It includes sensors for temperature, humidity, and soil moisture, as well as actuators for watering, ventilation, light intensity and if mounted light lift-motor. It's a perfect example of a practical IoT application that combines multiple hardware components and programming concepts.
-  <!--  Interest score = 10/10  -->
 - ### **🌡️ Monitor the Temperature and Humidity wutg DHT22 sensor**
   A fundamental project that involves connecting a DHT22 sensor to the Raspberry Pi to read and display temperature and humidity data. It forms the basis for more advanced projects like the greenhouse, weather station or heating-control home system.
   <!--  Interest score = 10/10  -->
+- ### **🖨️ Wireless Printer Server**
+  Turning an old, wired printer into a wireless one by connecting it to a Raspberry Pi. The Pi, running a program like CUPS, acts as a print server that all devices on the network can connect to.
+  <!--  Interest score = 8/10  -->
 
 ### 🤖 Bot Projects
 - ### **📲 Build your Telegram BOT Server**
@@ -180,19 +212,6 @@ Here there is a description for each sub-folders in this repository:
   Configuring the Pi to run a full WordPress website.This is a classic example of using the Pi to host a real-world application. It combines web server, database, and content management skills.
   <!--  Interest score = 9/10  -->
   
-### 🧠 Smart & Security Projects
-- ### **🗣️ Set Up ALEXA with Amazon Voice Service**
-  Using the Alexa Voice Service API to turn the Raspberry Pi into a custom Alexa smart speaker. It's a great way to explore voice-activated assistants.
-  <!--  Interest score = 8/10  -->
-- ### **🛂 RFID RC522 + MySQL Integration**
-  An advanced version of the basic RFID project that logs data from RFID reads into a database for more complex management. It's a great way to learn about databases and data logging, as it combines hardware with a server-side application.
-  <!--  Interest score = 9/10  -->
-- ### **🗄️ NAS-Pi Storage Server with OpenMediaVault**
-  Turning the Raspberry Pi into a Network-Attached Storage (NAS) device for file sharing and backup. It's a powerful and cost-effective way to create a personal cloud storage solution.
-  <!--  Interest score = 10/10  -->
-- ### **🔐 Encrypt & Decrypt Files with Security Keys**
-  A security-focused project that uses the Pi to encrypt and decrypt files with a hardware security key.
-  <!--  Interest score = 10/10  -->
 
 
 
