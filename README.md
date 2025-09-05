@@ -1,3 +1,4 @@
+![Banner image](https://github.com/Rasp-pvtora/Raspberry_Projects/blob/d9680167567ebca8363162cb1273f4104f777a41/background_au1kxiau1kxiau1k.png)
 # 📜 Raspberry Projects Repository
 
 This is an open source repository that contains projects made for a raspberry.
@@ -18,16 +19,72 @@ If you find this project helpful, you can support my work with a small donation.
 
 # 📂 Folder list:
 Here there is a description for each sub-folders in this repository:
-- ### **BTC wallet generate**
-- ### **BTC wallet cracking**
-- ### **BTC wallet cracking**
-- ### **BTC wallet cracking**
-      aasdasdasdasd
-- ### **BTC wallet cracking**
-  asdasdasd
+- ### **Control GPIOs from a website**
+- ### **Send and email with attachment (photo)**
+- ### **Control and get notification with Telegram**
+- ### **Control and get notification with Whatsapp**
+- ### **Build your Telegram BOT Server**
+- ### **Build your Twitter BOT Server**
+- ### **Build your Twitch BOT Server**
+- ### **Build your Instagram BOT Server**
+- ### **Build your TikTok BOT Server**
+- ### **Build your own GPS Tracker with Google Maps to monitor real time live location**
+- ### **Monitor the Temperature and Humidity wutg DHT22 sensor**
+- ### **Build your own 🥦Green-House**
+- ### **GPIOs datastorage file**
+- ### **Send and Receive CAN an CANopen messages**
+- ### **Send and Receive RS232 messages**
+- ### **Enable SPI synchronous serial interface**
+- ### **Read and write RFID with RC522 module**
+- ### **FM-Transmitter radio**
+- ### **Create your own Weather Station using Sense HAT**
+- ### **Set the Raspberry as a OPC-US server**
+- ### **Send a WiFi message**
+- ### **Create a Wifi-Extender fro the Ethernet**
+- ### **Send and Receive a Bluethooth message**
+- ### **Connect a Bluetooth speakers and stream audio**
+- ### **Stream Service with Steam Link**
+- ### **Stream your Spotify music**
+- ### **Make your own Android TV**
+- ### **Install KODI**
+- ### **Run Netflix on your Raspberry**
+- ### **Set up your Live-CAM Web Server**
+- ### **Control a DSLR Camera**
+- ### **Create your Stream-TV or Record Live-TV usign USB TV tuner and TvHeadend**
+- ### **Set up the Raspberry as a FTP or SFTP server**
+- ### **Set up the Raspberry as a WEB Server and DNS Server**
+- ### **Set up your own Email server**
+- ### **Set up a TOR access point**
+- ### **Configure QBitTorrent Client**
+- ### **Set up a Onion Server (host your website on the Darkweb)**
+- ### **Set up a Proxy server**
+- ### **Set up a private Mumble VOIP Server**
+- ### **Set up the UFW Firewall**
+- ### **Set up IP-Vanich VPN service**
+- ### **Set up Surfshark VPN service**
+- ### **Set up WireGuard VPN service**
+- ### **Set up a VPN Router**
+- ### **Set up a TightVNC screen sharing**
+- ### **Set up a TeamViewer host to remote access**
+- ### **Set up Pi-Hole, a network wife AD-Blocker**
+- ### **Block ADS using AdGuard Home**
+- ### **Set up AirPlay receiver**
+- ### **Network Scanner and monitoring**
+- ### **Internet Speed monitoring**
+- ### **Set up a NGINX Web Server**
+- ### **Create your own eBook Server with COPS (Calibre OPDS PHP Server)**
+- ### **Set up a PHP-MyAdmin web administrator**
+- ### **Set up a WordPress using Apache and MySQL**
+- ### **Set up ALEXA with the Amazon voice service**
+- ### **RFID RC522 module + MySQL database**
+- ### **Create your own NAS-Pi (storage server) with Open-Media-Vault**
+- ### **Encrypt and Decrypt files using Sercurity-Keys**
+  <!-- asdasdasd -->
+      <!-- aasdasdasdasd -->
 
 
-![Banner image](https://img.freepik.com/free-photo/front-close-view-fresh-red-raspberries-mellow-sour-all-white-surface_140725-19913.jpg)
+
+
 <!-- 
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
