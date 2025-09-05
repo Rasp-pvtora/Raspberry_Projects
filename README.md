@@ -16,12 +16,17 @@ If you find this project helpful, you can support my work with a small donation.
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-yellow.svg)](https://www.buymeacoffee.com/yourusername)
 -->
+[![alt text][http://i.imgur.com/tXSoThF.png]]
 
 # 📂 Folder list:
 Here there is a description for each sub-folders in this repository:
-- ### **Control GPIOs from a website**
-- ### **Send and email with attachment (photo)**
+###💡 Hardware & Sensor Projects
+- ### **💻 Control GPIOs from a website**
+  This project involves creating a web-based interface to remotely control the Raspberry Pi's General Purpose Input/Output (GPIO) pins. It's a foundational skill for building web-controlled home automation projects. It's a perfect entry point for beginners because it combines hardware (GPIOs) with software (web development), demonstrating the core capabilities of the Raspberry Pi. It's a stepping stone to countless other projects.
+- ### **📷 Send and email with attachment (photo or text)**
+  A simple project to program the Raspberry Pi to send an email, often triggered by an event like a button press or motion detection, and include an attached photo from a connected camera. This is a very common and practical project. It's a great way to learn about scripting, email protocols (SMTP), and integrating a camera module, making it very popular for security and monitoring applications.
 - ### **Control and get notification with Telegram**
+  This project focuses on using the Telegram API to send messages and control the Raspberry Pi. It's often used to receive alerts from sensors or to send commands to the Rasp-Pi from a smartphone. Telegram is a favorite for this kind of project due to its open and user-friendly API, which makes building interactive bots straightforward and reliable.
 - ### **Control and get notification with Whatsapp**
 - ### **Build your Telegram BOT Server**
 - ### **Build your Twitter BOT Server**
@@ -44,7 +49,8 @@ Here there is a description for each sub-folders in this repository:
 - ### **Send and Receive a Bluethooth message**
 - ### **Connect a Bluetooth speakers and stream audio**
 - ### **Stream Service with Steam Link**
-- ### **Stream your Spotify music**
+- ### **Stream your Spotify music 🎵**
+- ### **Create your own Minecraft Server ⛏️**
 - ### **Make your own Android TV**
 - ### **Install KODI**
 - ### **Run Netflix on your Raspberry**
