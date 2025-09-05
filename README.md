@@ -27,6 +27,9 @@ Here there is a description for each sub-folders in this repository:
 - ### **📷 Send and email with attachment (photo or text)**
   A simple project to program the Raspberry Pi to send an email, often triggered by an event like a button press or motion detection, and include an attached photo from a connected camera. This is a very common and practical project. It's a great way to learn about scripting, email protocols (SMTP), and integrating a camera module, making it very popular for security and monitoring applications.
   <!--  Interest score = 8/10  -->
+- ### **🗺️ Real-Time GPS Tracker with Google Maps**
+  This project involves building a mobile GPS tracking device using a Raspberry Pi, a GPS module, and a mobile data connection (like a GSM module) to send real-time location data to a web page displaying a Google Maps interface.
+  <!--  Interest score = 10/10  -->
 - ### **📲 Control and get notification with Telegram**
   This project focuses on using the Telegram API to send messages and control the Raspberry Pi. It's often used to receive alerts from sensors or to send commands to the Rasp-Pi from a smartphone. Telegram is a favorite for this kind of project due to its open and user-friendly API, which makes building interactive bots straightforward and reliable.
   <!--  Interest score = 9/10  -->
@@ -79,21 +82,12 @@ Here there is a description for each sub-folders in this repository:
 - ### **🌦️ Create your own Weather Station using Sense HAT**
   A project using the Sense HAT add-on board to measure environmental data like temperature, pressure, and humidity.
   <!--  Interest score = 10/10  -->
-- ### **Enable SPI synchronous serial interface**
-  AAAAAAAAA.
-  <!--  Interest score = AAAA/10  -->
-- ### **Build your own GPS Tracker with Google Maps to monitor real time live location**
-  AAAAAAAAA.
-  <!--  Interest score = AAAA/10  -->
-- ### **Send a WiFi message**
-  AAAAAAAAA.
-  <!--  Interest score = AAAA/10  -->
   
 ### 🍿 Media & Entertainment Projects
 - ### **👀 Set up your Live-CAM Web Server**
   Using a camera module or USB webcam to create a live-streaming web server. This is a classic "security camera" project and a great way to learn about video streaming and network services.
   <!--  Interest score = 10/10  -->
-- ### **Control a DSLR Camera**
+- ### **🕵️ Control a DSLR Camera**
   A specialized project to remotely control a DSLR camera using the Raspberry Pi. It's a complex project but offers a lot of creative potential.
   <!--  Interest score = 5/10  -->
 - ### **📲 Send and Receive a Bluethooth message**
@@ -109,8 +103,8 @@ Here there is a description for each sub-folders in this repository:
   A project to turn the Raspberry Pi into a dedicated Spotify Connect device, making it a standalone music streamer. A perfect solution for your home or your office/shop/pub.
   <!--  Interest score = 9/10  -->
 - ### **⛏️ Create your own Minecraft Server**
-  AAAAAAAAA.
-  <!--  Interest score = AAAA/10  -->
+  This project involves setting up a Minecraft server on a Raspberry Pi, allowing you to host a world for you and your friends to play in. It's an excellent way to create a private, low-power gaming server.
+  <!--  Interest score = 10/10  -->
 - ### **📺 Make your own Android TV**
   Installing a specialized Android OS on the Raspberry Pi to turn it into a media center.
   <!--  Interest score = 6/10  -->
