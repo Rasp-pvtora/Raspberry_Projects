@@ -44,7 +44,37 @@ Here there is a description for each sub-folders in this repository:
   <!--  Interest score = 10/10  -->
 - ### **🖼️ Digital Photo Frame with Facial Recognition**
   A more advanced digital photo frame that uses facial recognition to show photos of the people currently in the room. The Pi's camera detects who is present and cycles through relevant photo albums on the screen. This will make feel your guest more warm in your apartment showing them the best moment you already spent together!
-  <!--  Interest score = 7/10  -->
+  <!--  Interest score = 8/10  -->
+- ### **💊 Medicine Disposal with AI-Camera Recognition**
+  An advanced system that identifies and manages medications using AI vision, providing disposal guidance and even symptom-based advice.
+  <!--  Interest score = 10/10  -->
+- ### **🚗 Local Road Traffic AI-Monitoring System**
+  A traffic intelligence platform that uses edge AI on a Raspberry Pi to track vehicles, calculate speed, and detect accidents in real time. 
+  <!--  Interest score = 10/10  -->
+- ### **☀️ Solar Panel Follower**
+  An intelligent solar tracking system that uses servos and light sensors to maximize energy absorption, with machine learning to predict optimal angles.
+  <!--  Interest score = 10/10  -->
+- ### **🅿️ Private Auto Parking AI-Monitoring**
+  An AI-driven system that monitors parking lot availability and compliance using multiple Pi cameras. The combination of computer vision, IoT sensors, and a real-time dashboard makes it a comprehensive solution for managing private parking spaces.
+  <!--  Interest score = 10/10  -->
+- ### **🔒 Road/Gate Access Monitoring System**
+  A robust security system using AI and thermal imaging to track vehicles at a gate or road access point 24/7. This is in high demand for private and commercial properties.
+  <!--  Interest score = 10/10  -->
+- ### **📚 AI-Library Book Management System**
+  This is an excellent project for a public or school library, demonstrating how technology can improve daily operations. It goes beyond simple barcode scanning by adding AI-powered search and user analytics, which is a great educational and practical application. It's a comprehensive project with a lot of potential for expansion.
+  <!--  Interest score = 9/10  -->
+- ### **🎭 Smart Home Theater Director with Mood Detection**
+  An entertainment system that uses facial expression analysis to dynamically adjust media playback, lighting based on the viewer's mood, activity and time. If you have a romantic dinner you would like a different light intensity and music sound respect a friend dinner!
+  <!--  Interest score = 10/10  -->
+- ### **💪 Smart Fitness Coach with Pose Correction**
+  An AI-powered fitness coach that uses computer vision to track and correct workout poses in real time.
+  <!--  Interest score = 9/10  -->
+- ### **🧑‍🏫 AI-Based Smart Classroom Attendance System**
+  A classroom system that uses facial recognition to track attendance and student engagement. Has also the possibility to temporary deactivate WiFi/data usege (Example during exams) and identify is somebody is cheating during an exam, talking, sleeping or using mobile-phone!
+  <!--  Interest score = 10/10  -->
+- ### **🚌 AI-Smart Public Transport Tracker and Security System**
+  A system that uses AI and GPS on a Raspberry Pi to track public transport, count passengers, and even detect crowd density and potential incidents. Can also monitor if any harrasment, assault or violance are happening and call police for real support. 
+  <!--  Interest score = 10/10  -->
   
 ## 💡Home & IoT Automation Projects
 - ### **💻 Control GPIOs from a website**
@@ -53,11 +83,17 @@ Here there is a description for each sub-folders in this repository:
 - ### **🥦 Build your own Green-House**
   A comprehensive project that automates the monitoring and control of a small greenhouse. It includes sensors for temperature, humidity, and soil moisture, as well as actuators for watering, ventilation, light intensity and if mounted light lift-motor. It's a perfect example of a practical IoT application that combines multiple hardware components and programming concepts.
   <!--  Interest score = 10/10  -->
+- ### **🌱 Smart Hydroponic Nutrient Optimizer**
+  A next-gen hydroponics system that uses edge AI and advanced sensors for predictive nutrient optimization and automated dosing. Very similar to the "Green-House" project, but focused on soil-less farming. The use of AI for predictive optimization and automation makes it a professional-grade system for growers and a fantastic learning tool.
+  <!--  Interest score = 10/10  -->
 - ### **🚪 Smart Garage Door Opener**
   Control your garage door remotely with a Raspberry Pi and a relay. This project allows you to open and close your garage from anywhere using a smartphone app or a web interface. You can also add a sensor to check the door's status and receive notifications if it's left open.
   <!--  Interest score = 9/10  -->
 - ### **🐶 Smart Pet Feeder**
   Build a motorized pet feeder controlled by a Raspberry Pi. The feeder can be programmed to dispense food at specific times or water if the level is too low. Can be monitored remotely and is possible also to add a camera to check on your pet.
+  <!--  Interest score = 10/10  -->
+- ### **🐟 IoT-Based Smart Aquaponics System**
+  A sophisticated system for automating and optimizing an aquaponics setup using multiple sensors and edge AI.
   <!--  Interest score = 10/10  -->
 - ### **📷 Send and email with attachment (photo or text)**
   A simple project to program the Raspberry Pi to send an email, often triggered by an event like a button press or motion detection, and include an attached photo from a connected camera. This is a very common and practical project. It's a great way to learn about scripting, email protocols (SMTP), and integrating a camera module, making it very popular for security and monitoring applications.
