@@ -57,7 +57,7 @@ Here there is a description for each sub-folders in this repository:
 - ### **🅿️ Private Auto Parking AI-Monitoring**
   An AI-driven system that monitors parking lot availability and compliance using multiple Pi cameras. The combination of computer vision, IoT sensors, and a real-time dashboard makes it a comprehensive solution for managing private parking spaces.
   <!--  Interest score = 10/10  -->
-- ### **🔒 [Road/Gate Access Monitoring System**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/42f05a9d53f61bdc9d111dd31baf901488148c09/Smart%20%26%20Security%20Projects/Road%20and%20Gate%20Access%20Monitoring%20System)
+- ### 🔒 [**Road/Gate Access Monitoring System**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/42f05a9d53f61bdc9d111dd31baf901488148c09/Smart%20%26%20Security%20Projects/Road%20and%20Gate%20Access%20Monitoring%20System)
   A robust security system using AI and thermal imaging to track vehicles at a gate or road access point 24/7. This is in high demand for private and commercial properties.
   <!--  Interest score = 10/10  -->
 - ### **📚 AI-Library Book Management System**
