@@ -1,0 +1,8 @@
+opencv-python
+ultralytics
+pytesseract
+picamera2  # For Pi Camera control
+cryptography
+python-telegram-bot
+flask
+flask-jwt-extended  # For auth
