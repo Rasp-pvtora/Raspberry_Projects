@@ -77,6 +77,7 @@ There is a possibility to use Pi Camera's night mode (via auto-exposure in picam
 - Weatherproof Enclosure: €15
 - RFID Reader (RC522): €5
 - 4G/LTE Module (optional): €30
+  
 **Total**: ~€295 (using Pi5 and FLIR Lepton camera for night view)
 ***Cheaper budget***: ~€105 (using Pi4, Pi-Camera for night view and no 4G module)
 
