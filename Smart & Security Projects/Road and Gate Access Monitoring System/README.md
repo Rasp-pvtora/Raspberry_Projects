@@ -32,8 +32,8 @@ Geofencing: Defines specific monitoring zones (e.g., within 100 meters of the ga
     ├── web_app.py         # Flask web interface (run separately)
     ├── main.py            # Core loop for camera processing
     ├── requirements.txt   # Dependencies
-    ├── Command.md        # Setup instructions
-    ├── License.md        # Setup instructions
+    ├── Command.txt        # Command description to run the script
+    ├── License.md         # Setup instructions
     └── README.md          # Infos
 
 # Hardware Requirements
