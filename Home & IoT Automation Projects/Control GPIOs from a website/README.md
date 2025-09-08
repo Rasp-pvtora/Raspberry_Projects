@@ -1,4 +1,5 @@
-<img width="415" height="454" alt="image" src="https://github.com/user-attachments/assets/fd324ffc-f77a-49ae-90d8-ec3643dc97c5" /># 📜 Control Raspberry Pi GPIOs from a website
+<!-- <img width="415" height="454" alt="image" src="https://github.com/user-attachments/assets/fd324ffc-f77a-49ae-90d8-ec3643dc97c5" /> -->
+# 📜 Control Raspberry Pi GPIOs from a website
 
 ### 🪙 Donations are Welcome!
 If you find this project helpful, you can support my work with a small donation. 
