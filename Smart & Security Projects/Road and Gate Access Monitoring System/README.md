@@ -13,6 +13,9 @@ The Road/Gate Access Monitoring System is a Raspberry Pi-based solution designed
 The system uses AI-powered image processing to automatically detect and log vehicle details, including license plate number, car type, color, and entry/exit timestamps into a secure database. The system allows manual input of owner details (e.g., name, surname, address) for tracking purposes, making it valuable for community security or law enforcement applications (e.g., monitoring suspicious activity in drug/crime-related areas) helping to identify unusual activity or for police to monitor specific areas and track vehicles associated with criminal or suspicious activities.
 A crucial security function is the "watchlist" feature. The operator can input one or more specific license plate numbers, and the system will actively monitor for these vehicles. If a match is detected, it will immediately trigger a real-time alert via Telegram or email, allowing for swift action. The system is enhanced with thermal imaging for reliable 24/7 operation, ensuring no activity is missed, regardless of lighting conditions.
 
+# Legal Disclaimer:
+**Rasp-pvtora is not responsible for the legal use of this software. Users (*you, the reader of this repo*) are advised to consult with a legal professional to ensure compliance with local laws and regulations. While this software is functional, *you* are solely responsible for the legal use of this software in your jurisdiction and for your specific application (e.g., displaying required CCTV signs, securing employee consent for surveillance, etc.).**
+
 # Functionality
 Vehicle Detection and Logging: Uses a high-resolution Pi Camera with AI (OpenCV and YOLOv9) to detect vehicles, extract license plate numbers, and classify car type (e.g., sedan, SUV) and color. Logs entry/exit times and vehicle details to a PostgreSQL database.
 Manual Owner Data Input: Provides a web interface for operators to manually enter owner details (name, surname, address) associated with detected license plates, enabling tracking of frequent visitors or suspicious vehicles.
@@ -41,6 +44,21 @@ How to run:
 2. Test each modules individually: e.g., **python detection.py** or **py detection.py**.
 3. Run main core: **python main.py** (starts camera loop, logging, alerts).
 4. Run web: **python web_app.py** (dashboard at http://localhost:5000; add owners/watchlist).
+
+## Setup instructions:
+1. **Install Raspberry Pi OS:**
+    - Enable camera: **sudo raspi-config > Interface > Camera > Enable**.
+    - Update: **sudo apt update && sudo apt upgrade**.
+    - Install system deps: **sudo apt install python3-pip libatlas-base-dev libopenjp2-7 libtiff5 tesseract-ocr libcamera-apps**.
+    - Create virtual env: **python3 -m venv venv; source venv/bin/activate**.
+    - Install required libraries: **pip install -r requirements.txt**.
+2. **YOLOv8 Setup:** Run **from ultralytics import YOLO; model = YOLO('yolov8n.pt')** to auto-download pre-trained model. For plates/vehicles: Use COCO pre-trained (has 'car', 'truck'); fine-tune later with a dataset like https://universe.roboflow.com/browse/license-plates (download manually, train via Ultralytics docs).
+3. **Database:** SQLite file auto-created as 'access.db'.
+4. **Modify config.py:** is necessary to insert your Token and information  (as **Telegram BOT Token**, the **Gmail app password Token** and the **Encryption Key** generated with Fernet.generate_key() function)
+5. **Test and tune the system.** Start indoor and with a stable light (in a close enviroment like an underground gate/parking or in office using a Video/Photos).
+6. **GDPR Notes: Users are advised to consult with a legal professional to ensure compliance with local laws and regulations. While this software is functional, you are solely responsible for the legal use of this software in your jurisdiction and for your specific application (e.g., displaying required CCTV signs, securing employee consent for surveillance, etc.).**
+
+
 
 # Hardware Requirements
 - **Raspberry Pi 5**: For enhanced processing power to handle AI tasks and real-time analytics.
@@ -78,9 +96,9 @@ There is a possibility to use Pi Camera's night mode (via auto-exposure in picam
 - RFID Reader (RC522): €5
 - 4G/LTE Module (optional): €30
   
-**Total**: ~€295 (using Pi5 and FLIR Lepton camera for night view)
+**Total**: ~€295 (using Pi5 and FLIR Lepton camera for night view).
 
-***Cheaper budget***: ~€105 (using Pi4, Pi-Camera for night view and no 4G module)
+**Cheaper budget**: ~€105 (using Pi4, Pi-Camera for night view and no 4G module).
 
 # Detailed Functionality:
 - ### Vehicle Detection and Classification:
