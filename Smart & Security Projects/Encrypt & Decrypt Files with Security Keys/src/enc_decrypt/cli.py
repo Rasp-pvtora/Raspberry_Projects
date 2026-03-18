@@ -91,7 +91,7 @@ def cli():
 @click.option("--key-id",   "key_id",      required=True,  help="Logical key identifier (stored in keystore).")
 @click.option("--use-mock", is_flag=True,                  help="Use the software mock adapter (development only).")
 @click.option("--store",    "store_path",  default=None,   callback=_store_path_option, is_eager=False,
-              help="Path to keystore file (default: ~/.enc_decrypt/keystore.json).")
+              help="Path to keystore file (default: keystore/keystore.json inside the project).")
 def encrypt(input_path, output_path, key_id, use_mock, store_path):
     """Encrypt INPUT and store the wrapped DEK under KEY_ID in the keystore."""
     if not os.path.exists(input_path):

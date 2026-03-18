@@ -104,7 +104,7 @@ The `encrypt` command manages everything automatically:
 
 1. **A random 256-bit DEK (Data Encryption Key) is generated in memory** for that specific file.
 2. **The file is encrypted** using AES-GCM with that DEK.
-3. **The DEK is wrapped (protected)** by the hardware adapter (`--use-mock` during development, a real hardware token later). The wrapped DEK is stored in the keystore at `~/.enc_decrypt/keystore.json`. The raw DEK is never written to disk.
+3. **The DEK is wrapped (protected)** by the hardware adapter (`--use-mock` during development, a real hardware token later). The wrapped DEK is stored in the keystore at `keystore/keystore.json` inside the project folder. The raw DEK is never written to disk. This folder is in `.gitignore` and is never committed.
 4. **`--key-id`** is the name you assign to that key slot (e.g. `my-doc-key`). It links the ciphertext file to its stored key.
 5. **To decrypt**, the CLI looks up `my-doc-key` in the keystore, unwraps the DEK using the same adapter, and decrypts the file. You never handle the raw key bytes directly.
 
@@ -310,39 +310,25 @@ cd /home/pi/Projects/01-EncDecript_File_with_SecurityKeys
 **3. Encrypt a file**
 
 ```bash
-python3 -m src.enc_decrypt.cli encrypt \
-    --input  tests/original_document.txt \
-    --output tests/original_document.txt.enc \
-    --key-id my-key \
-    --use-mock
+python3 -m src.enc_decrypt.cli encrypt --input tests/original_document.txt --output tests/original_document.txt.enc --key-id my-key --use-mock
 ```
 
 **4. Decrypt a file**
 
 ```bash
-python3 -m src.enc_decrypt.cli decrypt \
-    --input  tests/original_document.txt.enc \
-    --output tests/original_document.txt.dec \
-    --key-id my-key \
-    --use-mock
+python3 -m src.enc_decrypt.cli decrypt --input tests/original_document.txt.enc --output tests/original_document.txt.dec --key-id my-key --use-mock
 ```
 
 **5. Export a key to a file (USB sharing)**
 
 ```bash
-python3 -m src.enc_decrypt.cli export-key \
-    --key-id my-key \
-    --output my-key.key \
-    --use-mock
+python3 -m src.enc_decrypt.cli export-key --key-id my-key --output my-key.key --use-mock
 ```
 
 **6. Decrypt using a key file (no keystore)**
 
 ```bash
-python3 -m src.enc_decrypt.cli decrypt \
-    --input    tests/original_document.txt.enc \
-    --output   tests/original_document.txt.dec \
-    --key-file my-key.key
+python3 -m src.enc_decrypt.cli decrypt --input tests/original_document.txt.enc --output tests/original_document.txt.dec --key-file my-key.key
 ```
 
 **7. List all keys in the keystore**
@@ -350,6 +336,10 @@ python3 -m src.enc_decrypt.cli decrypt \
 ```bash
 python3 -m src.enc_decrypt.cli list-keys
 ```
+
+> **Tip:** Always copy commands as a single line on the Raspberry Pi terminal.
+> The `\` continuation characters used in some documentation examples are for
+> readability only and will break the command if pasted literally.
 
 ---
 

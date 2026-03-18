@@ -25,7 +25,9 @@ from pathlib import Path
 from typing import Dict, Optional
 
 
-_DEFAULT_STORE = Path.home() / ".enc_decrypt" / "keystore.json"
+# Default keystore lives inside the project tree so it stays alongside the
+# encrypted files. The keystore/ folder is in .gitignore — never committed.
+_DEFAULT_STORE = Path(__file__).resolve().parents[2] / "keystore" / "keystore.json"
 
 
 def _b64(x: bytes) -> str:

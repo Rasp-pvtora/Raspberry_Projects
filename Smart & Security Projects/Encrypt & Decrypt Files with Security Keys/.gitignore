@@ -7,3 +7,5 @@ build/
 .env
 secrets.json
 
+# Keystore contains wrapped encryption keys — never commit
+keystore/
