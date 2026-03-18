@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enc_decrypt_securitykey"
+version = "0.1.0"
+description = "Prototype: encrypt/decrypt files using hardware security key (adapter + mock)"
+requires-python = ">=3.11"
+dependencies = [
+	"click>=8.0",
+	"cryptography>=40.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+  "ruff>=0.4.0",
+  "black>=24.0",
+]
+
+[project.scripts]
+enc-decrypt = "src.enc_decrypt.cli:cli"
+
+# ---------------------------------------------------------------------------
+# pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v --tb=short"
+
+# ---------------------------------------------------------------------------
+# ruff (linting)
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "S", "B", "UP"]
+ignore = [
+  "S101",   # assert used in tests — intentional
+  "S603",   # subprocess call in store.py Windows path — intentional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S106"]
+
+# ---------------------------------------------------------------------------
+# black (formatting)
+# ---------------------------------------------------------------------------
+[tool.black]
+line-length = 100
+target-version = ["py311"]
