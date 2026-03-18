@@ -3,26 +3,35 @@
 Commands
 --------
   encrypt     Encrypt a file and persist the wrapped DEK in the keystore.
-  decrypt     Decrypt a file by retrieving its DEK from the keystore.
+  decrypt     Decrypt a file by retrieving its DEK from the keystore OR from a key file.
   provision   Initialise a named key slot in the keystore (mock or real adapter).
   list-keys   List all key-ids registered in the keystore.
   rotate      Re-wrap an existing DEK with a fresh key and update the keystore.
+  export-key  Export a DEK from the keystore to a portable .key file (for sharing).
+  import-key  Import a .key file back into the keystore under a new key-id.
 
 Usage examples (mock adapter, laptop development)
 -------------------------------------------------
+  # Encrypt and store key in keystore
   python -m src.enc_decrypt.cli encrypt \\
       --input tests/original_document.txt \\
       --output tests/original_document.txt.enc \\
       --key-id my-key --use-mock
 
+  # Decrypt via keystore
   python -m src.enc_decrypt.cli decrypt \\
       --input tests/original_document.txt.enc \\
       --output tests/decrypted_document.txt \\
       --key-id my-key --use-mock
 
-  python -m src.enc_decrypt.cli list-keys
+  # Export the key to a file (e.g. for USB sharing)
+  python -m src.enc_decrypt.cli export-key --key-id my-key --use-mock --output my-key.key
 
-  python -m src.enc_decrypt.cli rotate --key-id my-key --use-mock
+  # Decrypt using a key file directly (no keystore needed)
+  python -m src.enc_decrypt.cli decrypt \\
+      --input tests/original_document.txt.enc \\
+      --output tests/decrypted_document.txt \\
+      --key-file my-key.key
 """
 import os
 import base64
@@ -120,38 +129,67 @@ def encrypt(input_path, output_path, key_id, use_mock, store_path):
 # ---------------------------------------------------------------------------
 
 @cli.command()
-@click.option("--input",    "input_path",  required=True,  help="Path to the ciphertext file.")
-@click.option("--output",   "output_path", required=True,  help="Destination path for the decrypted file.")
-@click.option("--key-id",   "key_id",      required=True,  help="Logical key identifier used during encryption.")
-@click.option("--use-mock", is_flag=True,                  help="Use the software mock adapter (development only).")
-@click.option("--store",    "store_path",  default=None,   callback=_store_path_option, is_eager=False,
+@click.option("--input",    "input_path",  required=True,           help="Path to the ciphertext file.")
+@click.option("--output",   "output_path", required=True,           help="Destination path for the decrypted file.")
+@click.option("--key-id",   "key_id",      default=None,            help="Key identifier in the keystore (alternative to --key-file).")
+@click.option("--key-file", "key_file",    default=None,            help="Path to an exported .key file (alternative to --key-id + keystore).")
+@click.option("--use-mock", is_flag=True,                           help="Use the software mock adapter (development only).")
+@click.option("--store",    "store_path",  default=None,            callback=_store_path_option, is_eager=False,
               help="Path to keystore file.")
-def decrypt(input_path, output_path, key_id, use_mock, store_path):
-    """Decrypt INPUT using the DEK stored under KEY_ID in the keystore."""
+def decrypt(input_path, output_path, key_id, key_file, use_mock, store_path):
+    """Decrypt INPUT using either a keystore KEY_ID or a portable KEY_FILE.
+
+    Two modes:
+
+    \b
+    1. Keystore mode (default):  --key-id my-key --use-mock
+    2. Key-file mode (sharing):  --key-file my-key.key
+    """
+    if not key_id and not key_file:
+        raise click.ClickException("Provide either --key-id (keystore) or --key-file (exported key file).")
+    if key_id and key_file:
+        raise click.ClickException("Provide only one of --key-id or --key-file, not both.")
     if not os.path.exists(input_path):
         raise click.ClickException(f"Input file not found: {input_path}")
 
-    adapter = _get_adapter(use_mock)
-
-    try:
-        entry = keystore.load_key(key_id, store_path)
-        wrapped = keystore.get_wrapped_dek(key_id, store_path)
-    except KeyError as exc:
-        raise click.ClickException(str(exc)) from exc
-
-    try:
-        dek = adapter.unwrap_key(wrapped)
-    except Exception as exc:
-        raise click.ClickException(f"Key unwrap failed: {exc}") from exc
-
-    try:
-        crypto_core.decrypt_file(input_path, output_path, dek, entry)
-    except Exception as exc:
-        raise click.ClickException(f"Decryption failed: {exc}") from exc
-
-    click.echo(f"[OK] Decrypted  : {input_path}")
-    click.echo(f"     Plaintext  : {output_path}")
-    click.echo(f"     Key-ID     : {key_id}")
+    if key_file:
+        # ---------- key-file mode: load raw DEK from file ----------
+        if not os.path.exists(key_file):
+            raise click.ClickException(f"Key file not found: {key_file}")
+        key_data = Path(key_file).read_bytes()
+        # Key file format: first line is JSON metadata, second is base64 DEK
+        import json as _json
+        lines = key_data.split(b"\n", 1)
+        if len(lines) != 2:
+            raise click.ClickException("Invalid key file format.")
+        meta = _json.loads(lines[0].decode())
+        dek  = _unb64(lines[1].decode().strip())
+        try:
+            crypto_core.decrypt_file(input_path, output_path, dek, meta)
+        except Exception as exc:
+            raise click.ClickException(f"Decryption failed: {exc}") from exc
+        click.echo(f"[OK] Decrypted  : {input_path}")
+        click.echo(f"     Plaintext  : {output_path}")
+        click.echo(f"     Key source : {key_file}")
+    else:
+        # ---------- keystore mode ----------
+        adapter = _get_adapter(use_mock)
+        try:
+            entry  = keystore.load_key(key_id, store_path)
+            wrapped = keystore.get_wrapped_dek(key_id, store_path)
+        except KeyError as exc:
+            raise click.ClickException(str(exc)) from exc
+        try:
+            dek = adapter.unwrap_key(wrapped)
+        except Exception as exc:
+            raise click.ClickException(f"Key unwrap failed: {exc}") from exc
+        try:
+            crypto_core.decrypt_file(input_path, output_path, dek, entry)
+        except Exception as exc:
+            raise click.ClickException(f"Decryption failed: {exc}") from exc
+        click.echo(f"[OK] Decrypted  : {input_path}")
+        click.echo(f"     Plaintext  : {output_path}")
+        click.echo(f"     Key-ID     : {key_id}")
 
 
 # ---------------------------------------------------------------------------
@@ -249,6 +287,107 @@ def rotate(key_id, use_mock, store_path):
 
     click.echo(f"[OK] Rotated key slot '{key_id}'.")
     click.echo("     WARNING: files encrypted with the old DEK must be re-encrypted.")
+
+
+# ---------------------------------------------------------------------------
+# export-key
+# ---------------------------------------------------------------------------
+
+@cli.command("export-key")
+@click.option("--key-id",   "key_id",     required=True, help="Key slot to export.")
+@click.option("--output",   "output_path",required=True, help="Destination path for the .key file (e.g. my-doc.key).")
+@click.option("--use-mock", is_flag=True,                help="Use the software mock adapter.")
+@click.option("--store",    "store_path", default=None,  callback=_store_path_option, is_eager=False,
+              help="Path to keystore file.")
+def export_key(key_id, output_path, use_mock, store_path):
+    """Export a DEK from the keystore to a portable .key file.
+
+    The exported file contains the metadata + raw DEK in a simple text format.
+    Protect this file like a password — anyone who has both the .key file and
+    the encrypted file can decrypt the content.
+
+    Typical workflow:
+
+    \b
+      Send the .enc file by email.
+      Deliver the .key file on a USB stick or secure channel.
+      The recipient runs:  decrypt --input file.enc --output file.dec --key-file file.key
+    """
+    import json as _json
+
+    adapter = _get_adapter(use_mock)
+
+    try:
+        entry   = keystore.load_key(key_id, store_path)
+        wrapped = keystore.get_wrapped_dek(key_id, store_path)
+    except KeyError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    try:
+        dek = adapter.unwrap_key(wrapped)
+    except Exception as exc:
+        raise click.ClickException(f"Key unwrap failed: {exc}") from exc
+
+    # Write: line 1 = JSON metadata, line 2 = base64 raw DEK
+    meta = {"alg": entry.get("alg", "AES-GCM"), "nonce": entry.get("nonce", "")}
+    key_bytes = (_json.dumps(meta) + "\n" + _b64(dek)).encode()
+    Path(output_path).write_bytes(key_bytes)
+
+    # Restrict permissions
+    try:
+        import stat
+        Path(output_path).chmod(stat.S_IRUSR | stat.S_IWUSR)
+    except Exception:
+        pass
+
+    click.echo(f"[OK] Key exported : {output_path}")
+    click.echo(f"     Key-ID        : {key_id}")
+    click.echo("     SECURITY NOTE : Keep this file secret. Anyone who has it can decrypt your files.")
+
+
+# ---------------------------------------------------------------------------
+# import-key
+# ---------------------------------------------------------------------------
+
+@cli.command("import-key")
+@click.option("--key-file", "key_file",   required=True, help="Path to the .key file to import.")
+@click.option("--key-id",   "key_id",     required=True, help="Name to register this key under in the keystore.")
+@click.option("--use-mock", is_flag=True,                help="Use the software mock adapter to re-wrap the key.")
+@click.option("--store",    "store_path", default=None,  callback=_store_path_option, is_eager=False,
+              help="Path to keystore file.")
+def import_key(key_file, key_id, use_mock, store_path):
+    """Import a .key file into the keystore under a new KEY_ID.
+
+    After importing you can use --key-id instead of --key-file for decryption.
+    """
+    import json as _json
+
+    if not os.path.exists(key_file):
+        raise click.ClickException(f"Key file not found: {key_file}")
+
+    key_data = Path(key_file).read_bytes()
+    lines    = key_data.split(b"\n", 1)
+    if len(lines) != 2:
+        raise click.ClickException("Invalid key file format.")
+
+    meta = _json.loads(lines[0].decode())
+    dek  = _unb64(lines[1].decode().strip())
+
+    adapter = _get_adapter(use_mock)
+    wrapped = adapter.wrap_key(dek)
+
+    try:
+        keystore.store_key(
+            key_id=key_id,
+            wrapped_dek=wrapped,
+            metadata=meta,
+            adapter_id=adapter.identify(),
+            store_path=store_path,
+        )
+    except KeyError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo(f"[OK] Key imported : {key_file} -> keystore['{key_id}']")
 
 
 if __name__ == "__main__":
