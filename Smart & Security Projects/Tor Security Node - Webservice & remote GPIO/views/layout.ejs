@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tor Security Node</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="fas fa-shield-halved"></i>
+        <span>Tor Security Node</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li><a href="/tor-website" class="<%= page === 'tor-website' ? 'active' : '' %>"><i class="fas fa-globe"></i><span>Tor Website</span></a></li>
+        <li><a href="/system" class="<%= page === 'system' ? 'active' : '' %>"><i class="fas fa-microchip"></i><span>System Monitor</span></a></li>
+        <li><a href="/access-point" class="<%= page === 'access-point' ? 'active' : '' %>"><i class="fas fa-wifi"></i><span>Tor Access Point</span></a></li>
+        <li><a href="/gpio" class="<%= page === 'gpio' ? 'active' : '' %>"><i class="fas fa-plug"></i><span>GPIO Control</span></a></li>
+        <li><a href="/file-browser" class="<%= page === 'file-browser' ? 'active' : '' %>"><i class="fas fa-folder-open"></i><span>File Browser</span></a></li>
+        <li><a href="/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <header class="top-bar">
+        <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('collapsed')">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="top-bar-info">
+          <span id="top-temp" class="badge"><i class="fas fa-thermometer-half"></i> --°C</span>
+          <span id="top-mem" class="badge"><i class="fas fa-memory"></i> --%</span>
+          <span id="top-cpu" class="badge"><i class="fas fa-microchip"></i> --</span>
+        </div>
+      </header>
+      <div class="content-area">
+        <%- body %>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

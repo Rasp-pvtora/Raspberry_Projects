@@ -1,0 +1,125 @@
+<%- include('layout', { body: `
+<h2><i class='fas fa-cog'></i> Settings</h2>
+
+<div class='grid grid-2'>
+  <div class='card'>
+    <h3><i class='fas fa-key'></i> Change Password</h3>
+    <div class='card-content'>
+      <div class='form-group'>
+        <label for='current-pw'>Current Password</label>
+        <input type='password' id='current-pw' class='form-control' autocomplete='current-password'>
+      </div>
+      <div class='form-group'>
+        <label for='new-pw'>New Password</label>
+        <input type='password' id='new-pw' class='form-control' autocomplete='new-password'>
+      </div>
+      <div class='form-group'>
+        <label for='confirm-pw'>Confirm New Password</label>
+        <input type='password' id='confirm-pw' class='form-control' autocomplete='new-password'>
+      </div>
+      <button class='btn btn-primary' onclick='changePassword()'><i class='fas fa-save'></i> Change Password</button>
+      <div id='pw-message' class='message'></div>
+    </div>
+  </div>
+
+  <div class='card'>
+    <h3><i class='fas fa-info-circle'></i> About</h3>
+    <div class='card-content'>
+      <table class='table'>
+        <tr><td>Project</td><td>Tor Security Node</td></tr>
+        <tr><td>Version</td><td>1.0.0</td></tr>
+        <tr><td>Runtime</td><td id='about-node'>--</td></tr>
+        <tr><td>Platform</td><td id='about-platform'>--</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class='card'>
+  <h3><i class='fas fa-sliders-h'></i> Environment Configuration</h3>
+  <div class='card-content'>
+    <p class='text-muted'>Edit the .env variables that control the application. Changes to PORT or HOST require a restart.</p>
+    <div id='env-editor'>Loading settings...</div>
+    <button class='btn btn-primary' onclick='saveSettings()' style='margin-top: 1rem;'><i class='fas fa-save'></i> Save Settings</button>
+    <div id='settings-message' class='message'></div>
+  </div>
+</div>
+
+<script>
+// --- Password change ---
+async function changePassword() {
+  const msg = document.getElementById('pw-message');
+  const curr = document.getElementById('current-pw').value;
+  const newPw = document.getElementById('new-pw').value;
+  const conf = document.getElementById('confirm-pw').value;
+  if (!curr || !newPw) { msg.textContent = 'All fields required'; msg.className = 'message error'; return; }
+  if (newPw !== conf) { msg.textContent = 'Passwords do not match'; msg.className = 'message error'; return; }
+  try {
+    const r = await fetch('/api/settings/password', {
+      method: 'PUT', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ currentPassword: curr, newPassword: newPw })
+    });
+    const d = await r.json();
+    if (r.ok) { msg.textContent = d.message; msg.className = 'message success'; }
+    else { msg.textContent = d.error; msg.className = 'message error'; }
+  } catch(e) { msg.textContent = e.message; msg.className = 'message error'; }
+}
+
+// --- Env editor ---
+async function loadSettings() {
+  try {
+    const r = await fetch('/api/settings');
+    const vars = await r.json();
+    const container = document.getElementById('env-editor');
+    container.innerHTML = '';
+    // Groups definition
+    const groups = {
+      'Server': ['PORT', 'HOST'],
+      'Authentication': ['ADMIN_USERNAME', 'ADMIN_PASSWORD'],
+      'Session': ['SESSION_SECRET'],
+      'Tor Hidden Service': ['TOR_HIDDEN_SERVICE_DIR', 'TOR_WEBSITE_DIR', 'TOR_CONTROL_PORT', 'TOR_SOCKS_PORT'],
+      'Access Point': ['AP_INTERFACE', 'AP_SSID', 'AP_PASSPHRASE', 'AP_SUBNET', 'AP_UPSTREAM_INTERFACE', 'TOR_TRANSPORT_PORT', 'TOR_DNS_PORT'],
+      'GPIO': ['GPIO_ENABLED'],
+      'File Browser': ['FILE_BROWSER_ROOT']
+    };
+    for (const [group, keys] of Object.entries(groups)) {
+      const h4 = document.createElement('h4'); h4.textContent = group; h4.style.marginTop = '1rem';
+      container.appendChild(h4);
+      for (const key of keys) {
+        if (!(key in vars)) continue;
+        const div = document.createElement('div'); div.className = 'form-group form-inline';
+        const label = document.createElement('label'); label.textContent = key; label.setAttribute('for', 'env-'+key);
+        const input = document.createElement('input'); input.className = 'form-control';
+        input.id = 'env-' + key; input.name = key;
+        input.type = (key.includes('PASSWORD') || key.includes('SECRET')) ? 'password' : 'text';
+        input.value = vars[key];
+        div.appendChild(label); div.appendChild(input);
+        container.appendChild(div);
+      }
+    }
+    // About info
+    document.getElementById('about-platform').textContent = (vars.HOST || '0.0.0.0') + ':' + (vars.PORT || '3000');
+  } catch(e) { document.getElementById('env-editor').textContent = 'Failed to load: ' + e.message; }
+}
+
+async function saveSettings() {
+  const msg = document.getElementById('settings-message');
+  const inputs = document.querySelectorAll('#env-editor input');
+  const updates = {};
+  inputs.forEach(input => { updates[input.name] = input.value; });
+  try {
+    const r = await fetch('/api/settings', {
+      method: 'PUT', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(updates)
+    });
+    const d = await r.json();
+    if (r.ok) { msg.textContent = d.message; msg.className = 'message success'; }
+    else { msg.textContent = d.error; msg.className = 'message error'; }
+  } catch(e) { msg.textContent = e.message; msg.className = 'message error'; }
+}
+
+// On load
+loadSettings();
+document.getElementById('about-node').textContent = 'Node.js';
+</script>
+` }) %>

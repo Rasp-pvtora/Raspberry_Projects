@@ -1,0 +1,32 @@
+<%- include('layout', { body: `
+<h2><i class='fas fa-folder-open'></i> File Browser</h2>
+
+<div class='card'>
+  <div class='card-content'>
+    <div class='breadcrumb' id='file-breadcrumb'>
+      <a href='#' onclick='navigateTo(\"/\")'><i class='fas fa-home'></i> Root</a>
+    </div>
+    <table class='table' id='file-table'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Modified</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan='3'>Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class='card' id='file-preview-card' style='display: none;'>
+  <h3><i class='fas fa-file-alt'></i> File Preview: <span id='preview-filename'></span></h3>
+  <div class='card-content'>
+    <pre id='file-preview-content' class='code-block'></pre>
+  </div>
+</div>
+
+<script src='/js/files.js'></script>
+` }) %>

@@ -1,0 +1,42 @@
+<%- include('layout', { body: `
+<h2><i class='fas fa-wifi'></i> Tor Access Point</h2>
+
+<div class='card'>
+  <h3>Access Point Status</h3>
+  <div class='card-content'>
+    <div class='grid grid-3'>
+      <div class='status-row'><span>Overall:</span><span id='ap-active' class='badge badge-unknown'>Checking...</span></div>
+      <div class='status-row'><span>hostapd:</span><span id='ap-hostapd' class='badge badge-unknown'>--</span></div>
+      <div class='status-row'><span>dnsmasq:</span><span id='ap-dnsmasq' class='badge badge-unknown'>--</span></div>
+      <div class='status-row'><span>Tor:</span><span id='ap-tor' class='badge badge-unknown'>--</span></div>
+      <div class='status-row'><span>SSID:</span><span id='ap-ssid'>--</span></div>
+      <div class='status-row'><span>Clients:</span><span id='ap-clients'>--</span></div>
+    </div>
+    <div class='btn-group' style='margin-top: 1.5rem;'>
+      <button class='btn btn-success btn-lg' onclick='apAction(\"start\")'><i class='fas fa-play'></i> Start Tor AP</button>
+      <button class='btn btn-danger btn-lg' onclick='apAction(\"stop\")'><i class='fas fa-stop'></i> Stop Tor AP</button>
+    </div>
+    <div id='ap-message' class='message' style='margin-top: 0.5rem;'></div>
+  </div>
+</div>
+
+<div class='card'>
+  <h3><i class='fas fa-info-circle'></i> How it works</h3>
+  <div class='card-content'>
+    <div class='info-box'>
+      <p>When activated, the Tor Access Point:</p>
+      <ol>
+        <li>Creates a WiFi hotspot on <strong>wlan0</strong> with the configured SSID and passphrase.</li>
+        <li>Assigns IP addresses to connected clients via <strong>dnsmasq</strong> DHCP.</li>
+        <li>Redirects all TCP traffic through the <strong>Tor</strong> transparent proxy.</li>
+        <li>Routes all DNS queries through Tor DNS resolver (prevents leaks).</li>
+        <li>Blocks UDP traffic (Tor only supports TCP).</li>
+      </ol>
+      <p><strong>Any device</strong> connected to this hotspot automatically gets Tor anonymization.</p>
+      <p class='text-warning'><i class='fas fa-exclamation-triangle'></i> Internet speeds will be slower through Tor. Some sites may block Tor exit nodes.</p>
+    </div>
+  </div>
+</div>
+
+<script src='/js/ap.js'></script>
+` }) %>

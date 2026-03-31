@@ -1,0 +1,76 @@
+<%- include('layout', { body: `
+<h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+<div class="grid grid-4">
+  <div class="card card-stat">
+    <div class="card-icon temp"><i class="fas fa-thermometer-half"></i></div>
+    <div class="card-body">
+      <span class="card-label">Temperature</span>
+      <span class="card-value" id="dash-temp">--°C</span>
+    </div>
+  </div>
+  <div class="card card-stat">
+    <div class="card-icon mem"><i class="fas fa-memory"></i></div>
+    <div class="card-body">
+      <span class="card-label">Memory Usage</span>
+      <span class="card-value" id="dash-mem">--%</span>
+    </div>
+  </div>
+  <div class="card card-stat">
+    <div class="card-icon cpu"><i class="fas fa-microchip"></i></div>
+    <div class="card-body">
+      <span class="card-label">CPU Load (1m)</span>
+      <span class="card-value" id="dash-cpu">--</span>
+    </div>
+  </div>
+  <div class="card card-stat">
+    <div class="card-icon uptime"><i class="fas fa-clock"></i></div>
+    <div class="card-body">
+      <span class="card-label">Uptime</span>
+      <span class="card-value" id="dash-uptime">--</span>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3><i class="fas fa-globe"></i> Tor Hidden Service</h3>
+    <div class="card-content" id="dash-tor-status">
+      <p>Loading...</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3><i class="fas fa-wifi"></i> Tor Access Point</h3>
+    <div class="card-content" id="dash-ap-status">
+      <p>Loading...</p>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3><i class="fas fa-chart-line"></i> Temperature History</h3>
+    <div class="card-content chart-container">
+      <canvas id="tempChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <h3><i class="fas fa-chart-bar"></i> Memory History</h3>
+    <div class="card-content chart-container">
+      <canvas id="memChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3><i class="fas fa-network-wired"></i> Network Interfaces</h3>
+  <div class="card-content">
+    <table class="table" id="dash-network">
+      <thead><tr><th>Interface</th><th>IP Address</th><th>MAC</th></tr></thead>
+      <tbody><tr><td colspan="3">Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="/js/dashboard.js"></script>
+` }) %>

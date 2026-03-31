@@ -1,0 +1,83 @@
+<%- include('layout', { body: `
+<h2><i class='fas fa-microchip'></i> System Monitor</h2>
+
+<div class='grid grid-4'>
+  <div class='card card-stat'>
+    <div class='card-icon temp'><i class='fas fa-thermometer-half'></i></div>
+    <div class='card-body'>
+      <span class='card-label'>Temperature</span>
+      <span class='card-value' id='sys-temp'>--°C</span>
+    </div>
+  </div>
+  <div class='card card-stat'>
+    <div class='card-icon mem'><i class='fas fa-memory'></i></div>
+    <div class='card-body'>
+      <span class='card-label'>Memory</span>
+      <span class='card-value' id='sys-mem'>-- / -- MB</span>
+    </div>
+  </div>
+  <div class='card card-stat'>
+    <div class='card-icon cpu'><i class='fas fa-microchip'></i></div>
+    <div class='card-body'>
+      <span class='card-label'>CPU Load</span>
+      <span class='card-value' id='sys-cpu'>--</span>
+    </div>
+  </div>
+  <div class='card card-stat'>
+    <div class='card-icon uptime'><i class='fas fa-clock'></i></div>
+    <div class='card-body'>
+      <span class='card-label'>Uptime</span>
+      <span class='card-value' id='sys-uptime'>--</span>
+    </div>
+  </div>
+</div>
+
+<div class='card'>
+  <h3><i class='fas fa-server'></i> Host Information</h3>
+  <div class='card-content'>
+    <table class='table' id='sys-host'>
+      <tbody><tr><td colspan='2'>Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class='grid grid-2'>
+  <div class='card'>
+    <h3><i class='fas fa-network-wired'></i> Network</h3>
+    <div class='card-content'>
+      <table class='table' id='sys-network'>
+        <thead><tr><th>Interface</th><th>IP</th><th>MAC</th></tr></thead>
+        <tbody><tr><td colspan='3'>Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class='card'>
+    <h3><i class='fas fa-hard-drive'></i> Disk Usage</h3>
+    <div class='card-content'>
+      <table class='table' id='sys-disk'>
+        <thead><tr><th>Mount</th><th>Size</th><th>Used</th><th>Avail</th><th>Use%</th></tr></thead>
+        <tbody><tr><td colspan='5'>Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class='card'>
+  <h3><i class='fas fa-cogs'></i> Services</h3>
+  <div class='card-content'>
+    <div class='service-grid' id='sys-services'>Loading...</div>
+  </div>
+</div>
+
+<div class='card'>
+  <h3><i class='fas fa-list'></i> Top Processes (by CPU)</h3>
+  <div class='card-content table-scroll'>
+    <table class='table' id='sys-procs'>
+      <thead><tr><th>PID</th><th>User</th><th>CPU%</th><th>MEM%</th><th>Command</th></tr></thead>
+      <tbody><tr><td colspan='5'>Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script src='/js/system.js'></script>
+` }) %>

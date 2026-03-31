@@ -1,0 +1,46 @@
+# Environment variables
+.env
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Build & cache
+dist/
+.cache/
+*.tgz
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tor hidden service keys (NEVER commit these)
+tor-data/
+hidden_service/
+
+# Session store
+sessions/
+
+# Logs
+logs/
+*.log
+
+# Test coverage
+coverage/
+
+# Uploaded/temporary files
+uploads/
+tmp/
