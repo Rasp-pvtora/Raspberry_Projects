@@ -66,47 +66,85 @@ Step-by-step engineering checklist for implementing the Tor Security Node projec
   - [x] `website/css/style.css` — Sample website dark theme
 - [x] Create `scripts/setup-tor.sh` — automated Tor + Nginx setup on Pi
 
-## Phase D — Tor Access Point & GPIO Control
+## Phase D — Tor Access Point, Travel Mode & GPIO Control
 
 - [x] Create `src/services/ap-service.js`
   - [x] `getAPStatus()` — check hostapd/dnsmasq/tor status, client count
   - [x] `startAP()` — write configs, set iptables, start services
   - [x] `stopAP()` — stop services, flush iptables
-- [x] Create `src/routes/access-point.js` — AP management REST API
-- [x] Create `views/access-point.ejs` — AP control page
-- [x] Create `public/js/ap.js` — AP page logic
+  - [x] Captive portal iptables rules (redirect HTTP → dashboard)
+  - [x] `scanUsbWifiAdapters()` — detect USB WiFi adapters
+  - [x] `getWifiNetworks()` — scan available WiFi networks on an interface
+  - [x] `startTravelMode()` — connect USB WiFi to upstream, create AP on wlan0
+  - [x] `stopTravelMode()` — disconnect USB WiFi, stop AP
+  - [x] `getTravelModeStatus()` — upstream connection + AP state
+- [x] Create `src/routes/access-point.js` — AP + travel mode REST API
+  - [x] `GET /api/ap/usb-scan` — scan for USB WiFi adapters
+  - [x] `GET /api/ap/wifi-networks` — scan WiFi networks on an interface
+  - [x] `POST /api/ap/travel-start` — start travel mode
+  - [x] `POST /api/ap/travel-stop` — stop travel mode
+  - [x] `GET /api/ap/travel-status` — get travel mode status
+- [x] Create `views/access-point.ejs` — AP control + travel mode UI
+  - [x] "Search WiFi-2-WiFi USB Adapter" button
+  - [x] USB adapter detection result display
+  - [x] WiFi network scan table
+  - [x] Travel mode start/stop controls
+  - [x] Travel mode status indicator
+- [x] Create `public/js/ap.js` — AP + travel mode page logic
 - [x] Create `scripts/setup-ap.sh` — automated AP setup on Pi
 - [x] Create `src/services/gpio-service.js`
-  - [x] Full 40-pin header layout definition
+  - [x] Load pin layout from JSON preset files (configurable via GPIO_PRESET_FILE)
+  - [x] Fallback to hardcoded layout if preset file not found
   - [x] `isAvailable()` — check if GPIO hardware is present
   - [x] `getPinLayout()` — layout with current states
   - [x] `configurePin()` — set pin direction (in/out)
   - [x] `readPin()` / `writePin()` — read/write pin values
   - [x] `releasePin()` / `releaseAll()` — clean up
+  - [x] `getPresetInfo()` — current preset name/model/description
+  - [x] `listPresets()` — list available preset files
+  - [x] `applyPresetDefaults()` — auto-configure default pins from preset
   - [x] Mock mode for non-Pi development
   - [x] Process exit cleanup (SIGINT/SIGTERM)
-- [x] Create `src/routes/gpio.js` — GPIO REST API
-- [x] Create `views/gpio.ejs` — GPIO control page with pin map
-- [x] Create `public/js/gpio.js` — interactive pin diagram and controls
+- [x] Create GPIO preset files in `gpio-presets/`
+  - [x] `rpi4b.json` — Raspberry Pi 4 Model B (default)
+  - [x] `rpi3bplus.json` — Raspberry Pi 3 Model B+
+  - [x] `rpi5.json` — Raspberry Pi 5
+  - [x] `rpizero2w.json` — Raspberry Pi Zero 2 W
+- [x] Create `src/routes/gpio.js` — GPIO + preset REST API
+  - [x] `GET /api/gpio/preset` — current preset info
+  - [x] `GET /api/gpio/presets` — list available presets
+  - [x] `POST /api/gpio/preset/apply-defaults` — apply default pin configs
+- [x] Create `views/gpio.ejs` — GPIO control page with presets and pin map
+- [x] Create `public/js/gpio.js` — interactive pin diagram, controls, and presets
 
-## Phase E — Settings & Deployment
+## Phase E — HTTPS, Settings & Deployment
 
+- [x] Implement native HTTPS support in `server.js`
+  - [x] Auto-generate self-signed cert with `selfsigned` library
+  - [x] Support custom cert/key paths via env
+  - [x] Set cookie `secure` flag when HTTPS enabled
+  - [x] WebSocket auto-upgrades to wss://
+- [x] Add `HTTPS_ENABLED`, `HTTPS_CERT_PATH`, `HTTPS_KEY_PATH` to `.env.default`
+- [x] Add `selfsigned` to package.json dependencies
+- [x] Add `certs/` to `.gitignore`
+- [x] Create `scripts/generate-cert.sh` — manual openssl cert generation
 - [x] Create `src/routes/settings.js`
   - [x] `GET /api/settings` — read .env (passwords masked)
   - [x] `PUT /api/settings` — update .env variables
   - [x] `PUT /api/settings/password` — change admin password
 - [x] Create `views/settings.ejs` — settings page with env editor and password form
+  - [x] Groups include HTTPS, Captive Portal, GPIO preset
 - [x] Create `deploy/deploy_to_pi.sh` — rsync deploy script for rasp-pi (192.168.216.90)
 - [ ] Create systemd service file on Pi (`tor-security-node.service`)
 - [ ] Test deploy script end-to-end
 
 ## Phase F — Documentation
 
-- [x] Create `README.md` — full setup guide, features, deployment, troubleshooting
-- [x] Create `TSD.md` — technical specification
+- [x] Create `README.md` — full setup guide, features, HTTPS, captive portal, travel mode, presets
+- [x] Create `TSD.md` — technical specification (open questions resolved)
 - [x] Create `task.md` — this checklist
 - [x] Create `docs/threat_model.md` — threat model and mitigations
-- [x] Create `.env.default` — documented environment template
+- [x] Create `.env.default` — documented environment template (incl. HTTPS, captive portal, GPIO preset)
 - [ ] Test all features on Raspberry Pi
 - [ ] Run `npm test` and verify all tests pass
 
@@ -114,12 +152,16 @@ Step-by-step engineering checklist for implementing the Tor Security Node projec
 
 - [ ] Unit tests for `system-service.js` (mock sysfs/os data)
 - [ ] Unit tests for `tor-service.js` (mock file reads/exec)
-- [ ] Unit tests for `gpio-service.js` (mock onoff)
+- [ ] Unit tests for `gpio-service.js` (mock onoff + preset loading)
+- [ ] Unit tests for `ap-service.js` (mock travel mode + captive portal)
 - [ ] Integration tests for auth routes (login/logout flow)
 - [ ] Integration tests for API routes (authenticated requests)
+- [ ] Integration tests for HTTPS mode (self-signed cert generation)
 - [ ] End-to-end test: deploy to Pi, verify dashboard loads
 - [ ] End-to-end test: Tor hidden service accessible via Tor Browser
 - [ ] End-to-end test: AP starts and routes traffic through Tor
+- [ ] End-to-end test: Captive portal redirects to dashboard
+- [ ] End-to-end test: Travel mode with USB WiFi adapter
 
 ## Phase H — Nice-to-Have (future)
 
@@ -127,6 +169,5 @@ Step-by-step engineering checklist for implementing the Tor Security Node projec
 - [ ] Dynamic DNS for remote dashboard access
 - [ ] Tor Bridge / obfs4 support for censored networks
 - [ ] Multi-user support with role-based access
-- [ ] GPIO presets (save/load pin configurations)
-- [ ] Travel router mode (WiFi-to-WiFi with USB adapter)
-- [ ] HTTPS for the dashboard (self-signed or Let's Encrypt)
+- [ ] Custom GPIO presets from the web UI (save/export/import)
+- [ ] Let's Encrypt auto-renewal for HTTPS certificates

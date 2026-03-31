@@ -34,6 +34,9 @@ hidden_service/
 # Session store
 sessions/
 
+# TLS certificates (auto-generated, contain private key)
+certs/
+
 # Logs
 logs/
 *.log

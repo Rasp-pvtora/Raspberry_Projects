@@ -21,8 +21,9 @@ The dashboard is built with Node.js (Express), uses EJS for server-side renderin
 ### 2.1 Web Dashboard (Node.js + Express + EJS)
 
 - **Authentication:** Session-based login with credentials stored in `.env`. Rate-limited login endpoint (10 attempts per 15 min). Password changeable from the Settings page.
+- **HTTPS support:** Native self-signed TLS certificate, auto-generated on first start. Set `HTTPS_ENABLED=true` in `.env`. Also supports custom cert/key files.
 - **Layout:** Dark-themed sidebar navigation with pages for Dashboard, Tor Website, System Monitor, Access Point, GPIO, File Browser, and Settings.
-- **Real-time data:** WebSocket server pushes system stats (temperature, memory, CPU) to the browser every 2 seconds. Chart.js renders live temperature and memory history graphs.
+- **Real-time data:** WebSocket server (ws/wss) pushes system stats (temperature, memory, CPU) to the browser every 2 seconds. Chart.js renders live temperature and memory history graphs.
 - **Settings page:** Edit all `.env` variables from the web interface. Changes are written to the `.env` file and take effect immediately (or on restart for some variables).
 
 ### 2.2 Feature 1 — Tor Hidden Service
@@ -49,14 +50,23 @@ The dashboard is built with Node.js (Express), uses EJS for server-side renderin
   - One-click start: writes hostapd.conf, dnsmasq.conf, configures iptables for Tor transparent proxy, starts all services.
   - One-click stop: stops services and flushes iptables rules.
   - Status panel: shows hostapd/dnsmasq/tor status and connected client count.
+  - **Captive portal:** When `CAPTIVE_PORTAL_ENABLED=true`, devices connecting to the WiFi are automatically redirected to the dashboard login page (HTTP port 80 → dashboard port). This allows users to open the web-app automatically when they connect to the AP.
   - Setup script (`scripts/setup-ap.sh`) for permanent system-level installation.
 
+- **WiFi-to-WiFi Travel Mode:**
+  - "Search WiFi-2-WiFi USB Adapter" button scans for connected USB WiFi interfaces.
+  - Scan available upstream WiFi networks via the USB adapter.
+  - Select an upstream network, enter password, and start travel mode.
+  - The USB adapter connects to the upstream WiFi; the built-in wlan0 becomes the Tor AP.
+  - Travel mode status panel shows upstream connection state and AP status.
+
 - **GPIO Control:**
-  - Pin layout map of the Raspberry Pi 40-pin header, color-coded by type (GPIO, power, ground).
-  - Configure any GPIO pin as input or output.
-  - Toggle output pins (HIGH/LOW) with a button click.
-  - Read input pin values.
-  - Release pins when done.
+  - Pin layout loaded from JSON preset files (`gpio-presets/` directory).
+  - Default preset: Raspberry Pi 4 Model B (`rpi4b.json`). Configurable via `GPIO_PRESET_FILE` in `.env`.
+  - Available presets: Pi 4B, Pi 3B+, Pi 5, Pi Zero 2 W.
+  - Presets contain pin layout, alt functions, and optional default pin configurations.
+  - "Apply Preset Defaults" button auto-configures default pins from the preset.
+  - Color-coded 40-pin header, configure as input or output, toggle, read, release.
   - Mock mode on non-Pi hardware for development.
 
 ### 2.5 Environment Configuration
@@ -100,8 +110,9 @@ These features require paid third-party services or significantly more complexit
                       ┌──────────────────────────────────────────────┐
                       │            Raspberry Pi                      │
                       │                                              │
-  Browser ──HTTP────► │  Express (port 3000)                         │
-  Browser ──WS──────► │  ├── Session auth + rate limiting            │
+  Browser ─HTTP/S───► │  Express (port 3000, HTTP or HTTPS)          │
+  Browser ──WS/S────► │  ├── Session auth + rate limiting            │
+                      │  ├── HTTPS native (selfsigned / custom cert) │
                       │  ├── EJS views (dashboard, system, etc.)     │
                       │  ├── REST API (/api/system, /api/tor, etc.)  │
                       │  ├── WebSocket (live system stats)           │
@@ -111,7 +122,9 @@ These features require paid third-party services or significantly more complexit
                       │  ├── system-service  → sysfs, /proc, os      │
                       │  ├── tor-service     → systemctl tor, torrc  │
                       │  ├── ap-service      → hostapd, dnsmasq, ipt │
-                      │  └── gpio-service    → onoff library         │
+                      │  │    ├── captive portal (HTTP→dashboard)    │
+                      │  │    └── travel mode (USB WiFi upstream)    │
+                      │  └── gpio-service    → onoff + JSON presets  │
                       │                                              │
                       │  Tor Hidden Service:                          │
                       │  ├── Tor daemon → .onion address              │
@@ -120,10 +133,12 @@ These features require paid third-party services or significantly more complexit
                       │  Tor Access Point:                            │
                       │  ├── hostapd (wlan0 WiFi hotspot)            │
                       │  ├── dnsmasq (DHCP for AP clients)           │
-                      │  └── iptables → Tor TransPort/DNS            │
+                      │  ├── iptables → Tor TransPort/DNS            │
+                      │  └── captive portal → auto-open dashboard    │
                       │                                              │
                       │  GPIO:                                        │
-                      │  └── 40-pin header (read/write via onoff)    │
+                      │  ├── 40-pin header (read/write via onoff)    │
+                      │  └── Presets: rpi4b / rpi3b+ / rpi5 / zero2w │
                       └──────────────────────────────────────────────┘
 ```
 
@@ -143,7 +158,7 @@ These features require paid third-party services or significantly more complexit
 | Threat | Mitigation |
 |---|---|
 | Brute-force login | Rate limiting (10 attempts per 15 min); strong password in `.env` |
-| Session hijacking | `httpOnly`, `sameSite`, session secret; HTTPS recommended for production |
+| Session hijacking | `httpOnly`, `sameSite`, session secret; native HTTPS with `secure` cookie flag |
 | Path traversal in file browser | `path.resolve()` + startsWith check against `FILE_BROWSER_ROOT` |
 | Path traversal in website editor | Same protection: resolved path must start with `TOR_WEBSITE_DIR` |
 | Service injection via service manager | Whitelist of allowed services (`tor`, `nginx`, `hostapd`, `dnsmasq`) |
@@ -151,7 +166,7 @@ These features require paid third-party services or significantly more complexit
 | Unauthorized GPIO access | Authentication required for all API endpoints |
 | `.env` exposure | In `.gitignore`; chmod 600 recommended; masked in Settings API |
 | Tor Hidden Service key theft | Protected by file permissions (`debian-tor` user, `chmod 700`) |
-| Network sniffing of dashboard | Dashboard runs on LAN; add HTTPS reverse proxy for production |
+| Network sniffing of dashboard | Native HTTPS support (self-signed or custom cert); `secure` cookie flag |
 | Physical access to the Pi | Physical security; consider full-disk encryption |
 
 See [docs/threat_model.md](docs/threat_model.md) for the complete analysis.
@@ -168,6 +183,7 @@ See [docs/threat_model.md](docs/threat_model.md) for the complete analysis.
 | Charts | Chart.js (CDN) | Lightweight, responsive, no build required |
 | Auth | express-session + bcrypt | Simple session-based auth suited for single-user device |
 | Security | helmet + express-rate-limit | Industry-standard Express security middleware |
+| TLS | selfsigned | Auto-generate self-signed certificates for native HTTPS |
 | GPIO | onoff | Proven Node.js GPIO library for Raspberry Pi |
 | System info | sysfs + os module + systeminformation | Native for Pi, fallback for development |
 | CSS | Custom dark theme | No framework dependency, lightweight |
@@ -209,17 +225,23 @@ See [docs/threat_model.md](docs/threat_model.md) for the complete analysis.
 
 1. Write `setup-ap.sh` script for hostapd/dnsmasq/iptables.
 2. Implement `ap-service.js` (start/stop AP, status, client count).
-3. Build the Access Point page with one-click controls.
-4. Implement `gpio-service.js` (pin layout, configure, read, write, release).
-5. Build the GPIO page with interactive 40-pin header diagram.
+3. Add captive portal iptables rules (redirect HTTP → dashboard).
+4. Implement WiFi-to-WiFi travel mode (USB adapter scan, network scan, connect, start AP).
+5. Build the Access Point page with one-click controls and travel mode UI.
+6. Implement `gpio-service.js` (preset loading, pin layout, configure, read, write, release).
+7. Create GPIO preset JSON files for Pi 4B (default), Pi 3B+, Pi 5, Pi Zero 2 W.
+8. Build the GPIO page with interactive 40-pin header diagram and preset controls.
 
-### Phase E — Settings and deployment (Week 3)
+### Phase E — HTTPS and settings (Week 3)
 
-1. Implement Settings API (read/write `.env`, change password).
-2. Build the Settings page with env editor and password change form.
-3. Write `deploy_to_pi.sh` deployment script.
-4. Create systemd service file for auto-start.
-5. Test full deployment on Raspberry Pi.
+1. Implement native HTTPS support with selfsigned library (auto-generate on first start).
+2. Add `HTTPS_ENABLED`, `HTTPS_CERT_PATH`, `HTTPS_KEY_PATH` env vars.
+3. Write `scripts/generate-cert.sh` for manual openssl cert generation.
+4. Implement Settings API (read/write `.env`, change password).
+5. Build the Settings page with env editor and password change form.
+6. Write `deploy_to_pi.sh` deployment script.
+7. Create systemd service file for auto-start.
+8. Test full deployment on Raspberry Pi.
 
 ### Phase F — Documentation and polish (Week 3–4)
 
@@ -233,22 +255,14 @@ See [docs/threat_model.md](docs/threat_model.md) for the complete analysis.
 
 ## 8. Deliverables
 
-- Full working Node.js dashboard with authentication.
+- Full working Node.js dashboard with authentication and native HTTPS.
 - Tor Hidden Service management with sample .onion website.
 - Real-time system monitoring with Chart.js graphs.
-- One-click Tor Access Point control.
-- Interactive GPIO pin control with 40-pin header diagram.
+- One-click Tor Access Point control with captive portal.
+- WiFi-to-WiFi travel mode with USB WiFi adapter support.
+- Interactive GPIO pin control with hardware-specific preset files.
 - Graphical file browser.
 - Settings management from UI.
-- Setup scripts for Tor and AP.
+- Setup scripts for Tor, AP, and TLS certificate generation.
 - Deploy script for Raspberry Pi (SSH alias: `rasp-pi` at `192.168.216.90`).
 - `README.md`, `TSD.md`, `task.md`, `docs/threat_model.md`.
-
----
-
-## 9. Open Questions
-
-- Should the dashboard support HTTPS natively (self-signed cert) or rely on a separate Nginx reverse proxy?
-- Do you want the Tor Access Point to support travel mode (WiFi-to-WiFi with USB adapter)?
-- Should GPIO presets (saved pin configurations) be implemented?
-- Is a TUI (terminal UI) fallback desired for headless management?

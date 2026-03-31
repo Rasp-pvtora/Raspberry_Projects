@@ -4,7 +4,9 @@ const session = require('express-session');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const fs = require('fs');
 const http = require('http');
+const https = require('https');
 const WebSocket = require('ws');
 
 const authMiddleware = require('./src/middleware/auth');
@@ -18,7 +20,39 @@ const settingsRoutes = require('./src/routes/settings');
 const systemService = require('./src/services/system-service');
 
 const app = express();
-const server = http.createServer(app);
+
+// --- HTTPS / HTTP server selection ---
+const HTTPS_ENABLED = (process.env.HTTPS_ENABLED || 'false') === 'true';
+const HTTPS_CERT_PATH = process.env.HTTPS_CERT_PATH || path.join(__dirname, 'certs', 'cert.pem');
+const HTTPS_KEY_PATH = process.env.HTTPS_KEY_PATH || path.join(__dirname, 'certs', 'key.pem');
+
+let server;
+if (HTTPS_ENABLED) {
+  // Check if cert files exist; if not, generate self-signed
+  if (!fs.existsSync(HTTPS_CERT_PATH) || !fs.existsSync(HTTPS_KEY_PATH)) {
+    console.log('  HTTPS enabled but no certificates found. Generating self-signed certificate...');
+    const selfsigned = require('selfsigned');
+    const attrs = [{ name: 'commonName', value: 'TorSecurityNode' }];
+    const pems = selfsigned.generate(attrs, {
+      keySize: 2048,
+      days: 365,
+      algorithm: 'sha256'
+    });
+    const certDir = path.dirname(HTTPS_CERT_PATH);
+    fs.mkdirSync(certDir, { recursive: true });
+    fs.writeFileSync(HTTPS_CERT_PATH, pems.cert, 'utf8');
+    fs.writeFileSync(HTTPS_KEY_PATH, pems.private, 'utf8');
+    console.log(`  Certificates saved to ${certDir}/`);
+  }
+  const httpsOptions = {
+    cert: fs.readFileSync(HTTPS_CERT_PATH, 'utf8'),
+    key: fs.readFileSync(HTTPS_KEY_PATH, 'utf8')
+  };
+  server = https.createServer(httpsOptions, app);
+  console.log('  HTTPS mode enabled');
+} else {
+  server = http.createServer(app);
+}
 const wss = new WebSocket.Server({ noServer: true });
 
 // --- View engine ---
@@ -59,7 +93,7 @@ const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: HTTPS_ENABLED,
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
     sameSite: 'lax'
@@ -128,7 +162,8 @@ const PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 server.listen(PORT, HOST, () => {
-  console.log(`\n  Tor Security Node running at http://${HOST}:${PORT}\n`);
+  const scheme = HTTPS_ENABLED ? 'https' : 'http';
+  console.log(`\n  Tor Security Node running at ${scheme}://${HOST}:${PORT}\n`);
 });
 
 module.exports = { app, server };

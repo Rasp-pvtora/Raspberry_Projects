@@ -71,4 +71,34 @@ router.post('/release', (req, res) => {
   }
 });
 
+// --- GPIO Presets ---
+
+// GET /api/gpio/preset — current preset info
+router.get('/preset', (req, res) => {
+  try {
+    res.json(gpioService.getPresetInfo());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/gpio/presets — list available presets
+router.get('/presets', (req, res) => {
+  try {
+    res.json(gpioService.listPresets());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/gpio/preset/apply-defaults — apply default pin configs from preset
+router.post('/preset/apply-defaults', (req, res) => {
+  try {
+    const results = gpioService.applyPresetDefaults();
+    res.json({ success: true, configured: results });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

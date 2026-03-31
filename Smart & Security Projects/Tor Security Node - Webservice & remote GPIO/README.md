@@ -11,17 +11,19 @@ An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Hos
 3. [Libraries and dependencies](#libraries-and-dependencies)
 4. [Quickstart — Laptop (development)](#quickstart--laptop-development)
 5. [Environment configuration (.env)](#environment-configuration-env)
-6. [Features overview](#features-overview)
-7. [Feature 1 — Tor Hidden Service (.onion website)](#feature-1--tor-hidden-service-onion-website)
-8. [Feature 2 — System monitor and file browser](#feature-2--system-monitor-and-file-browser)
-9. [Feature 3 — Tor access point with GPIO control](#feature-3--tor-access-point-with-gpio-control)
-10. [Authentication](#authentication)
-11. [How to deploy to Raspberry Pi](#how-to-deploy-to-raspberry-pi)
-12. [How to run on the Raspberry Pi](#how-to-run-on-the-raspberry-pi)
-13. [Real-world applications](#real-world-applications)
-14. [Security notes](#security-notes)
-15. [Troubleshooting](#troubleshooting)
-16. [Where to next](#where-to-next)
+6. [HTTPS support](#https-support)
+7. [Features overview](#features-overview)
+8. [Feature 1 — Tor Hidden Service (.onion website)](#feature-1--tor-hidden-service-onion-website)
+9. [Feature 2 — System monitor and file browser](#feature-2--system-monitor-and-file-browser)
+10. [Feature 3 — Tor access point with GPIO control](#feature-3--tor-access-point-with-gpio-control)
+11. [Captive portal (auto-open dashboard)](#captive-portal-auto-open-dashboard)
+12. [Authentication](#authentication)
+13. [How to deploy to Raspberry Pi](#how-to-deploy-to-raspberry-pi)
+14. [How to run on the Raspberry Pi](#how-to-run-on-the-raspberry-pi)
+15. [Real-world applications](#real-world-applications)
+16. [Security notes](#security-notes)
+17. [Troubleshooting](#troubleshooting)
+18. [Where to next](#where-to-next)
 
 ---
 
@@ -29,7 +31,7 @@ An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Hos
 
 ```
 .
-├── server.js                ← Node.js entry point (Express + WebSocket)
+├── server.js                ← Node.js entry point (Express + WebSocket + HTTPS)
 ├── package.json             ← Dependencies and scripts
 ├── .env.default             ← Environment variable template (copy to .env)
 ├── .gitignore               ← Git ignore rules
@@ -40,23 +42,23 @@ An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Hos
 │   │   ├── auth.js          ← Login / logout routes
 │   │   ├── system.js        ← System monitoring API
 │   │   ├── tor.js           ← Tor hidden service management API
-│   │   ├── access-point.js  ← Tor access point API
-│   │   ├── gpio.js          ← GPIO read/write API
+│   │   ├── access-point.js  ← Tor access point + travel mode API
+│   │   ├── gpio.js          ← GPIO read/write + preset API
 │   │   ├── files.js         ← File browser API
 │   │   └── settings.js      ← Settings / .env management API
 │   └── services/
 │       ├── system-service.js  ← System info (temp, memory, disk, processes)
 │       ├── tor-service.js     ← Tor daemon and hidden service management
-│       ├── ap-service.js      ← Access point (hostapd, dnsmasq, iptables)
-│       └── gpio-service.js   ← GPIO pin control (onoff library)
+│       ├── ap-service.js      ← Access point + travel mode + captive portal
+│       └── gpio-service.js   ← GPIO pin control (onoff + JSON presets)
 ├── views/                   ← EJS templates (server-side rendered)
 │   ├── layout.ejs           ← Base layout with sidebar navigation
 │   ├── login.ejs            ← Login page
 │   ├── dashboard.ejs        ← Main dashboard with real-time charts
 │   ├── tor-website.ejs      ← Tor hidden service management
 │   ├── system.ejs           ← System monitor
-│   ├── access-point.ejs     ← Tor access point control
-│   ├── gpio.ejs             ← GPIO pin map and control
+│   ├── access-point.ejs     ← Tor access point + travel mode control
+│   ├── gpio.ejs             ← GPIO pin map, control, and presets
 │   ├── file-browser.ejs     ← Filesystem navigator
 │   └── settings.ejs         ← Settings and password management
 ├── public/                  ← Static frontend assets
@@ -66,9 +68,14 @@ An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Hos
 │       ├── dashboard.js     ← Dashboard page logic + Chart.js
 │       ├── system.js        ← System monitor page logic
 │       ├── tor.js           ← Tor website page logic
-│       ├── gpio.js          ← GPIO control page logic
+│       ├── gpio.js          ← GPIO control + preset page logic
 │       ├── files.js         ← File browser page logic
-│       └── ap.js            ← Access point page logic
+│       └── ap.js            ← Access point + travel mode page logic
+├── gpio-presets/            ← GPIO hardware presets (selectable via .env)
+│   ├── rpi4b.json           ← Raspberry Pi 4 Model B (default)
+│   ├── rpi3bplus.json       ← Raspberry Pi 3 Model B+
+│   ├── rpi5.json            ← Raspberry Pi 5
+│   └── rpizero2w.json       ← Raspberry Pi Zero 2 W
 ├── website/                 ← Sample .onion website (3 pages)
 │   ├── index.html           ← Home page
 │   ├── contact.html         ← Contact page
@@ -76,7 +83,8 @@ An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Hos
 │   └── css/style.css        ← Sample website stylesheet
 ├── scripts/
 │   ├── setup-tor.sh         ← Tor hidden service setup script
-│   └── setup-ap.sh          ← Tor access point setup script
+│   ├── setup-ap.sh          ← Tor access point setup script
+│   └── generate-cert.sh     ← HTTPS certificate generation (manual/openssl)
 ├── deploy/
 │   └── deploy_to_pi.sh      ← rsync-based deploy script
 ├── docs/
@@ -117,6 +125,7 @@ An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Hos
 | [ws](https://www.npmjs.com/package/ws) | ^8.18.0 | WebSocket server for real-time system stats |
 | [systeminformation](https://systeminformation.io/) | ^5.23.8 | Cross-platform system info (fallback on non-Pi) |
 | [onoff](https://www.npmjs.com/package/onoff) | ^6.0.3 | Raspberry Pi GPIO control |
+| [selfsigned](https://www.npmjs.com/package/selfsigned) | ^2.4.1 | Auto-generate self-signed TLS certificates |
 | [multer](https://www.npmjs.com/package/multer) | ^1.4.5-lts.1 | File upload handling |
 | [chart.js](https://www.chartjs.org/) | ^4.4.7 | Real-time charts (loaded via CDN) |
 
@@ -193,6 +202,9 @@ Copy `.env.default` to `.env` and edit it. **Never commit `.env` to git.**
 |---|---|---|
 | `PORT` | `3000` | Dashboard web server port |
 | `HOST` | `0.0.0.0` | Listen address (`0.0.0.0` = all interfaces) |
+| `HTTPS_ENABLED` | `false` | Enable native HTTPS with self-signed certificate |
+| `HTTPS_CERT_PATH` | `./certs/cert.pem` | Path to TLS certificate (auto-generated if missing) |
+| `HTTPS_KEY_PATH` | `./certs/key.pem` | Path to TLS private key (auto-generated if missing) |
 | `SESSION_SECRET` | `CHANGE_ME...` | Random string for session encryption. Generate with: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
 | `ADMIN_USERNAME` | `admin` | Dashboard login username |
 | `ADMIN_PASSWORD` | `changeme` | Dashboard login password |
@@ -207,8 +219,43 @@ Copy `.env.default` to `.env` and edit it. **Never commit `.env` to git.**
 | `AP_UPSTREAM_INTERFACE` | `eth0` | Upstream internet interface |
 | `TOR_TRANSPORT_PORT` | `9040` | Tor transparent proxy port |
 | `TOR_DNS_PORT` | `5353` | Tor DNS port |
+| `CAPTIVE_PORTAL_ENABLED` | `true` | Auto-redirect AP clients to dashboard login (captive portal) |
 | `GPIO_ENABLED` | `true` | Enable GPIO features (set `false` on non-Pi) |
+| `GPIO_PRESET_FILE` | `./gpio-presets/rpi4b.json` | GPIO pin layout preset for your Pi model. Available: `rpi4b.json`, `rpi3bplus.json`, `rpi5.json`, `rpizero2w.json` |
 | `FILE_BROWSER_ROOT` | `/home/pi` | Root directory for the file browser |
+
+---
+
+## HTTPS support
+
+The dashboard supports native HTTPS with self-signed TLS certificates.
+
+**Enable HTTPS:**
+
+1. Set `HTTPS_ENABLED=true` in your `.env` file.
+2. Start the server — a self-signed certificate is auto-generated on first start if no cert files exist at the configured paths.
+3. Access the dashboard at `https://192.168.216.90:3000` (accept the self-signed certificate warning in your browser).
+
+**Use your own certificate:**
+
+```ini
+HTTPS_ENABLED=true
+HTTPS_CERT_PATH=/path/to/your/cert.pem
+HTTPS_KEY_PATH=/path/to/your/key.pem
+```
+
+**Manual certificate generation with OpenSSL:**
+
+```bash
+bash scripts/generate-cert.sh
+```
+
+This creates `certs/cert.pem` and `certs/key.pem` (valid for 365 days).
+
+When HTTPS is enabled:
+- The session cookie gets the `secure` flag (only sent over HTTPS).
+- WebSocket automatically uses `wss://` instead of `ws://`.
+- The `certs/` directory is in `.gitignore` and never committed.
 
 ---
 
@@ -221,10 +268,10 @@ The dashboard has a sidebar with seven sections:
 | **Dashboard** | Overview with real-time temperature, memory, CPU charts, and Tor/AP status |
 | **Tor Website** | Start/stop Tor hidden service, view .onion address, edit website files |
 | **System Monitor** | Temperature, memory, disk, network, running processes, service management |
-| **Tor Access Point** | Enable/disable Tor WiFi hotspot with one click |
-| **GPIO Control** | Interactive 40-pin header diagram, configure pins, toggle outputs, read inputs |
+| **Tor Access Point** | Enable/disable Tor WiFi hotspot, WiFi-to-WiFi travel mode, captive portal |
+| **GPIO Control** | Interactive 40-pin header diagram with hardware presets, configure pins, toggle outputs |
 | **File Browser** | Navigate the Pi's filesystem graphically, preview files |
-| **Settings** | Change password, edit all .env variables from the UI |
+| **Settings** | Change password, edit all .env variables (incl. HTTPS, GPIO preset) from the UI |
 
 ---
 
@@ -283,17 +330,51 @@ The `website/` folder contains a three-page demo site (Home, Contact, Pricing) w
   - Redirects all TCP traffic through Tor's transparent proxy.
   - Routes DNS through Tor's DNS resolver.
   - Blocks UDP (Tor only supports TCP).
+  - **Captive portal** redirects connecting devices to the dashboard login (see below).
 - Shows service status (hostapd, dnsmasq, tor) and connected client count.
 - One-click **stop** to disable everything.
 
+**WiFi-to-WiFi Travel Mode:**
+
+- Click **"Search WiFi-2-WiFi USB Adapter"** to scan for connected USB WiFi adapters.
+- If a USB WiFi adapter is detected, a configuration panel appears:
+  1. Select the USB WiFi interface from the dropdown.
+  2. Click **"Scan WiFi Networks"** to see available upstream networks.
+  3. Select a network, enter the password, and click **"Start Travel Mode"**.
+- The USB adapter connects to the upstream WiFi, while the built-in `wlan0` becomes the Tor AP.
+- This turns the Pi into a **portable Tor router** — no Ethernet cable needed.
+- Travel mode status shows whether the USB adapter is connected and the AP is active.
+
 **GPIO Control:**
 
-- **Interactive 40-pin header diagram** showing all physical pins, color-coded by type (power, ground, GPIO).
+- **Hardware presets** — pin layout loaded from JSON files in `gpio-presets/`. Set `GPIO_PRESET_FILE` in `.env` to match your Pi model:
+  - `./gpio-presets/rpi4b.json` — **Raspberry Pi 4 Model B** (default)
+  - `./gpio-presets/rpi3bplus.json` — Raspberry Pi 3 Model B+
+  - `./gpio-presets/rpi5.json` — Raspberry Pi 5
+  - `./gpio-presets/rpizero2w.json` — Raspberry Pi Zero 2 W
+- Each preset includes the 40-pin header layout with GPIO numbers, names, alt functions, and optional default pin configurations.
+- **"Apply Preset Defaults"** button auto-configures the default pins from the preset (e.g. GPIO17 as output for LED/relay).
+- **Interactive 40-pin header diagram** — color-coded by type (power, ground, GPIO).
 - Click a GPIO pin to select it, then configure as **input** or **output**.
 - **Toggle outputs** (HIGH/LOW) with a button click.
 - **Read input values** in real time.
 - **Release pins** when done.
 - On non-Pi hardware, GPIO runs in **mock mode** — the interface works but values are simulated.
+
+---
+
+## Captive portal (auto-open dashboard)
+
+When `CAPTIVE_PORTAL_ENABLED=true` (default) and the Tor Access Point is started, devices connecting to the WiFi hotspot are automatically redirected to the dashboard login page.
+
+**How it works:**
+
+1. When a device connects to the AP WiFi (`TorSecurityNode` by default), it usually probes `http://captive.apple.com` or a similar URL to check for internet connectivity.
+2. The iptables captive portal rule redirects HTTP traffic (port 80) to the dashboard (port 3000).
+3. The device's OS detects a captive portal and shows a "Sign in to WiFi" popup or opens a browser.
+4. The user sees the Tor Security Node login page.
+
+This means **anyone connecting to the AP WiFi will automatically see the dashboard** — no need to remember the IP address.
 
 ---
 
@@ -372,13 +453,17 @@ nano .env
 
 Set `SESSION_SECRET` to a random string and change `ADMIN_PASSWORD`.
 
-**4. Start the dashboard**
+**4. (Optional) Enable HTTPS**
+
+Edit `.env` and set `HTTPS_ENABLED=true`. The server will auto-generate a self-signed certificate on first start.
+
+**5. Start the dashboard**
 
 ```bash
 node server.js
 ```
 
-Access it from your browser at `http://192.168.216.90:3000`.
+Access it from your browser at `http://192.168.216.90:3000` (or `https://` if HTTPS is enabled).
 
 **5. (Optional) Set up Tor Hidden Service**
 
@@ -446,6 +531,7 @@ sudo systemctl start tor-security-node
 ## Security notes
 
 - **Change the default password immediately** after first login. Use the Settings page or edit `.env`.
+- **Enable HTTPS** by setting `HTTPS_ENABLED=true` in `.env`. This encrypts all dashboard traffic and sets the `secure` cookie flag.
 - **Generate a strong `SESSION_SECRET`** — run: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
 - **The `.env` file contains sensitive data.** It is in `.gitignore` and should never be committed. Protect it with file permissions: `chmod 600 .env`
 - **Rate limiting** is enabled on the login endpoint (10 attempts per 15 minutes).
@@ -463,11 +549,15 @@ sudo systemctl start tor-security-node
 | Problem | Solution |
 |---|---|
 | Dashboard not loading | Check if the server is running. Verify the Pi's IP and port. Check `node server.js` output for errors. |
+| HTTPS certificate warning | Expected with self-signed certs. Click "Advanced" → "Proceed" in your browser. For a trusted cert, use Let's Encrypt or replace the files in `certs/`. |
 | Login fails | Verify credentials in `.env`. Check rate limiting (wait 15 min or restart server). |
 | GPIO shows "not available" | Install `onoff`: `npm install onoff`. Ensure GPIO is enabled on the Pi. |
+| GPIO preset not loading | Check `GPIO_PRESET_FILE` in `.env`. Verify the JSON file exists in `gpio-presets/`. |
 | Tor status shows "Stopped" | Run `sudo systemctl status tor`. Run `sudo bash scripts/setup-tor.sh` for initial setup. |
 | No .onion address | Tor needs time to generate keys. Wait 30–60 seconds. Check `sudo cat /var/lib/tor/tor-security-node/hostname`. |
 | Access point not starting | Check `sudo systemctl status hostapd`. Verify `wlan0` is not connected to another network. |
+| USB WiFi adapter not detected | Run `lsusb` to verify the adapter is recognized. Check `iw dev` for wireless interfaces. Some adapters need drivers. |
+| Captive portal not working | Verify `CAPTIVE_PORTAL_ENABLED=true` in `.env`. The AP must be started from the dashboard (not manually). Some devices cache portal status. |
 | File browser shows "Path traversal denied" | The requested path is outside `FILE_BROWSER_ROOT`. Edit `.env` to adjust. |
 | WebSocket disconnects | The browser may be on a different network. Ensure the WebSocket URL matches the server. |
 | `npm install` fails on Pi | Ensure Node.js 18+ is installed: `node --version`. Install via NodeSource: `curl -fsSL https://deb.nodesource.com/setup_18.x \| sudo bash -` |

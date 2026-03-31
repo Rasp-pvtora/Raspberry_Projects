@@ -5,6 +5,12 @@
   <h3>GPIO Status</h3>
   <div class='card-content'>
     <p>Available: <span id='gpio-available' class='badge badge-unknown'>Checking...</span></p>
+    <p style='margin-top:0.4rem;'>Preset: <span id='gpio-preset-name' class='badge'>--</span>
+      <span id='gpio-preset-model' style='font-size:0.82rem;color:var(--text-secondary);margin-left:0.5rem;'></span></p>
+    <div class='btn-group' style='margin-top:0.5rem;'>
+      <button class='btn btn-sm btn-primary' onclick='applyPresetDefaults()'><i class='fas fa-magic'></i> Apply Preset Defaults</button>
+    </div>
+    <div id='gpio-preset-msg' class='message'></div>
   </div>
 </div>
 

@@ -1,4 +1,8 @@
+const fs = require('fs');
+const path = require('path');
+
 const GPIO_ENABLED = (process.env.GPIO_ENABLED || 'true') === 'true';
+const GPIO_PRESET_FILE = process.env.GPIO_PRESET_FILE || path.join(__dirname, '../../gpio-presets/rpi4b.json');
 
 let Gpio;
 try {
@@ -12,9 +16,31 @@ try {
 // Track active GPIO pin objects
 const activePins = {};
 
-// Raspberry Pi 40-pin header layout
-// Physical pin → { gpio, name, type }
-const PIN_LAYOUT = {
+// Load pin layout from preset file
+let PRESET = null;
+let PIN_LAYOUT = {};
+
+function loadPreset() {
+  try {
+    const presetPath = path.resolve(GPIO_PRESET_FILE);
+    const raw = fs.readFileSync(presetPath, 'utf8');
+    PRESET = JSON.parse(raw);
+    PIN_LAYOUT = {};
+    for (const [pin, info] of Object.entries(PRESET.pinLayout)) {
+      PIN_LAYOUT[pin] = { gpio: info.gpio, name: info.name, type: info.type };
+    }
+    return PRESET;
+  } catch (err) {
+    console.error(`Failed to load GPIO preset from ${GPIO_PRESET_FILE}: ${err.message}`);
+    // Fallback to hardcoded Pi 4 layout
+    PIN_LAYOUT = getFallbackLayout();
+    PRESET = { name: 'Fallback (Pi 4 B)', model: 'rpi4b', description: 'Hardcoded fallback layout', pinLayout: PIN_LAYOUT, defaultConfigurations: [] };
+    return PRESET;
+  }
+}
+
+function getFallbackLayout() {
+  return {
   1:  { gpio: null, name: '3.3V',  type: 'power' },
   2:  { gpio: null, name: '5V',    type: 'power' },
   3:  { gpio: 2,    name: 'GPIO2 (SDA1)',  type: 'gpio' },
@@ -55,7 +81,11 @@ const PIN_LAYOUT = {
   38: { gpio: 20,   name: 'GPIO20 (MOSI)', type: 'gpio' },
   39: { gpio: null, name: 'GND',   type: 'ground' },
   40: { gpio: 21,   name: 'GPIO21 (SCLK)', type: 'gpio' }
-};
+  };
+}
+
+// Load preset on startup
+loadPreset();
 
 /**
  * Check if GPIO is available on this system.
@@ -192,6 +222,57 @@ function getActivePins() {
 process.on('SIGINT', () => { releaseAll(); process.exit(); });
 process.on('SIGTERM', () => { releaseAll(); process.exit(); });
 
+/**
+ * Get currently loaded preset info.
+ */
+function getPresetInfo() {
+  return {
+    name: PRESET ? PRESET.name : 'Unknown',
+    model: PRESET ? PRESET.model : 'unknown',
+    description: PRESET ? PRESET.description : '',
+    file: GPIO_PRESET_FILE,
+    defaultConfigurations: PRESET ? (PRESET.defaultConfigurations || []) : []
+  };
+}
+
+/**
+ * List all available preset files in the gpio-presets directory.
+ */
+function listPresets() {
+  const presetsDir = path.join(__dirname, '../../gpio-presets');
+  try {
+    const files = fs.readdirSync(presetsDir).filter(f => f.endsWith('.json'));
+    return files.map(f => {
+      try {
+        const raw = fs.readFileSync(path.join(presetsDir, f), 'utf8');
+        const preset = JSON.parse(raw);
+        return { file: f, name: preset.name, model: preset.model, description: preset.description };
+      } catch (_) {
+        return { file: f, name: f, model: '', description: 'Parse error' };
+      }
+    });
+  } catch (_) {
+    return [];
+  }
+}
+
+/**
+ * Apply default pin configurations from the preset.
+ */
+function applyPresetDefaults() {
+  if (!PRESET || !PRESET.defaultConfigurations) return [];
+  const results = [];
+  for (const config of PRESET.defaultConfigurations) {
+    try {
+      const result = configurePin(config.gpio, config.direction);
+      results.push({ ...result, label: config.label || '' });
+    } catch (err) {
+      results.push({ gpio: config.gpio, error: err.message });
+    }
+  }
+  return results;
+}
+
 module.exports = {
   isAvailable,
   getPinLayout,
@@ -201,5 +282,9 @@ module.exports = {
   releasePin,
   releaseAll,
   getActivePins,
+  getPresetInfo,
+  listPresets,
+  loadPreset,
+  applyPresetDefaults,
   PIN_LAYOUT
 };

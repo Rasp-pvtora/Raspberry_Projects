@@ -1,5 +1,5 @@
 /**
- * GPIO Control page — interactive pin map and pin management.
+ * GPIO Control page — interactive pin map, pin management, and presets.
  */
 const PIN_LAYOUT = {}; // Will be loaded from API
 
@@ -9,6 +9,15 @@ async function loadGPIO() {
     const badge = document.getElementById('gpio-available');
     badge.textContent = status.available ? 'Yes' : 'No (mock mode)';
     badge.className = 'badge ' + (status.available ? 'badge-success' : 'badge-warning');
+
+    // Load preset info
+    try {
+      const preset = await api('/api/gpio/preset');
+      const presetName = document.getElementById('gpio-preset-name');
+      const presetModel = document.getElementById('gpio-preset-model');
+      if (presetName) presetName.textContent = preset.name || 'Unknown';
+      if (presetModel) presetModel.textContent = preset.model ? '(' + preset.model + ')' : '';
+    } catch (_) {}
 
     // Load full layout
     const layout = await api('/api/gpio/layout');
@@ -26,6 +35,26 @@ async function loadGPIO() {
     }
   } catch (e) {
     document.getElementById('gpio-available').textContent = 'Error';
+  }
+}
+
+async function applyPresetDefaults() {
+  const msg = document.getElementById('gpio-preset-msg');
+  msg.textContent = 'Applying preset defaults...';
+  msg.className = 'message';
+  try {
+    const r = await api('/api/gpio/preset/apply-defaults', { method: 'POST' });
+    if (r.success && r.configured.length > 0) {
+      msg.textContent = 'Applied ' + r.configured.length + ' default pin(s) from preset';
+      msg.className = 'message success';
+    } else {
+      msg.textContent = 'No default configurations in this preset';
+      msg.className = 'message';
+    }
+    loadGPIO();
+  } catch (e) {
+    msg.textContent = e.message;
+    msg.className = 'message error';
   }
 }
 

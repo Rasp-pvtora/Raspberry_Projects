@@ -75,11 +75,13 @@ async function loadSettings() {
     // Groups definition
     const groups = {
       'Server': ['PORT', 'HOST'],
+      'HTTPS': ['HTTPS_ENABLED', 'HTTPS_CERT_PATH', 'HTTPS_KEY_PATH'],
       'Authentication': ['ADMIN_USERNAME', 'ADMIN_PASSWORD'],
       'Session': ['SESSION_SECRET'],
       'Tor Hidden Service': ['TOR_HIDDEN_SERVICE_DIR', 'TOR_WEBSITE_DIR', 'TOR_CONTROL_PORT', 'TOR_SOCKS_PORT'],
       'Access Point': ['AP_INTERFACE', 'AP_SSID', 'AP_PASSPHRASE', 'AP_SUBNET', 'AP_UPSTREAM_INTERFACE', 'TOR_TRANSPORT_PORT', 'TOR_DNS_PORT'],
-      'GPIO': ['GPIO_ENABLED'],
+      'Captive Portal': ['CAPTIVE_PORTAL_ENABLED'],
+      'GPIO': ['GPIO_ENABLED', 'GPIO_PRESET_FILE'],
       'File Browser': ['FILE_BROWSER_ROOT']
     };
     for (const [group, keys] of Object.entries(groups)) {
