@@ -111,7 +111,7 @@ Here there is a description for each sub-folders in this repository:
   Turning an old, wired printer into a wireless one by connecting it to a Raspberry Pi. The Pi, running a program like CUPS, acts as a print server that all devices on the network can connect to.
   <!--  Interest score = 8/10  -->
 
-### 🤖 Bot Projects
+## 🤖 Bot Projects
 - ### **📲 Build your Telegram BOT Server**
   Run a dedicated server to host a custom Telegram bot, enabling it to respond to user commands and perform automated tasks.
   <!--  Interest score = 9/10  -->
@@ -125,7 +125,7 @@ Here there is a description for each sub-folders in this repository:
   Run a bot that can automate Marketing emails or Presentation emails. A very practical and useful project for small business to promote their offers, present their company or produts to a new customer or give a "Welcoming email" with information for AirBnb.
   <!--  Interest score = 9/10  -->
 
-### 🖥️ Hardware & Networking Projects
+## 🖥️ Hardware & Networking Projects
 - ### **🧾 GPIOs datastorage file**
   Logging data from GPIO pins to a file, such as sensor readings or button presses. It's a simple yet crucial step for data logging and analysis.
   <!--  Interest score = 7/10  -->
@@ -151,7 +151,7 @@ Here there is a description for each sub-folders in this repository:
   A project using the Sense HAT add-on board to measure environmental data like temperature, pressure, and humidity.
   <!--  Interest score = 10/10  -->
   
-### 🍿 Media & Entertainment Projects
+## 🍿 Media & Entertainment Projects
 - ### **👀 Set up your Live-CAM Web Server**
   Using a camera module or USB webcam to create a live-streaming web server. This is a classic "security camera" project and a great way to learn about video streaming and network services.
   <!--  Interest score = 10/10  -->
@@ -183,7 +183,7 @@ Here there is a description for each sub-folders in this repository:
   Building a personal digital video recorder (DVR) and live TV streamer using a USB TV tuner. A fairly popular but complex project. It's a great way to learn about media servers and local TV broadcasting, appealing to those looking to "cut the cord."
   <!--  Interest score = 8/10  -->
   
-### 🌍 Server & Network Infrastructure Projects
+## 🌍 Server & Network Infrastructure Projects
 - ### **📁 Set up the Raspberry as a FTP or SFTP server**
   Act as a file transfer server, allowing you to share files over a network. A foundational and highly practical server project. It's a great way to learn about network protocols and file management, and it's a common first step for many users.
   <!--  Interest score = 9/10  -->
