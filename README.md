@@ -33,7 +33,7 @@ Here there is a description for each sub-folders in this repository:
 - ### **🗄️ NAS-Pi Storage Server with OpenMediaVault**
   Turning the Raspberry Pi into a Network-Attached Storage (NAS) device for file sharing and backup. It's a powerful and cost-effective way to create a personal cloud storage solution.
   <!--  Interest score = 10/10  -->
-- ### **🔐 Encrypt & Decrypt Files with Security Keys**
+- ### 🔒 [**Encrypt & Decrypt Files with Security Keys**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/34d440372968e9aac9d1844e4e251ae1ebb9ba81/Smart%20%26%20Security%20Projects/Encrypt%20%26%20Decrypt%20Files%20with%20Security%20Keys)
   A security-focused project that uses the Pi to encrypt and decrypt files with a hardware security key.
   <!--  Interest score = 10/10  -->
 - ### **🕵️ Secure Raspberry Pi Zero W VPN Server**
