@@ -21,6 +21,9 @@ If you find this project helpful, you can support my work with a small donation.
 Here there is a description for each sub-folders in this repository:
 
 ## 🧠 Smart & Security Projects
+- ### 📡[** Tor Security Node — Webservice & Remote GPIO**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/2ca5e7560cb082d1f2271ffbc459b51a1847b215/Smart%20%26%20Security%20Projects/Tor%20Security%20Node%20-%20Webservice%20%26%20remote%20GPIO)
+  An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Host a .onion website, monitor system health, manage a Tor WiFi access point, and control GPIO pins — all from a single web interface.
+  <!--  Interest score = 9/10  -->
 - ### **🗣️ Set Up ALEXA with Amazon Voice Service**
   Using the Alexa Voice Service API to turn the Raspberry Pi into a custom Alexa smart speaker. It's a great way to explore voice-activated assistants.
   <!--  Interest score = 8/10  -->
@@ -39,7 +42,7 @@ Here there is a description for each sub-folders in this repository:
 - ### **🕵️ Secure Raspberry Pi Zero W VPN Server**
   Turn a Raspberry Pi Zero W into a compact and low-power VPN server. This allows you to create a secure tunnel to your home network, so you can safely access your files and browse the internet securely when you're away from home.
   <!--  Interest score = 9/10  -->
-- ### **🔔 Doorbell with Facial Recognition**
+- ### 🔔[** Doorbell with Facial Recognition**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/7c18e78c0d141d7fc546d4fecf70f8dea3dff1ca/Smart%20%26%20Security%20Projects/Doorbell%20with%20Facial%20Recognition)
   Upgrade a standard doorbell with a Raspberry Pi camera and facial recognition software. The system can identify known individuals and send different notifications or trigger different actions based on who is at the door. A possibility to save a photo and send as message on the phone is added. Is also possible to listen remotly or even speak (example talk with the postman to give detailed informations on live)
   <!--  Interest score = 10/10  -->
 - ### **🖼️ Digital Photo Frame with Facial Recognition**
@@ -77,7 +80,7 @@ Here there is a description for each sub-folders in this repository:
   <!--  Interest score = 10/10  -->
   
 ## 💡Home & IoT Automation Projects
-- ### **💻 Control GPIOs from a website**
+- ### 💻[** Control GPIOs from a website**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Home%20%26%20IoT%20Automation%20Projects/Control%20GPIOs%20from%20a%20website)
   This project involves creating a web-based interface to remotely control the Raspberry Pi's General Purpose Input/Output (GPIO) pins. It's a foundational skill for building web-controlled home automation projects. It's a perfect entry point for beginners because it combines hardware (GPIOs) with software (web development), demonstrating the core capabilities of the Raspberry Pi. It's a stepping stone to countless other projects.
   <!--  Interest score = 9/10  -->
 - ### **🥦 Build your own Green-House**
@@ -190,13 +193,13 @@ Here there is a description for each sub-folders in this repository:
 - ### **🌐 Set up the Raspberry as a WEB Server and DNS Server**
   A core networking project that turns the Pi into both a web server (hosting websites) and a DNS server (managing domain name resolution). This is a classic and educational project for anyone interested in web development or network administration. It's a direct path to hosting your own content.
   <!--  Interest score = 9/10  -->
-- ### **🕵️ Set up a TOR access point**
+- ### 🕵️[** Set up a TOR access point**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Server%20%26%20Network%20Infrastructure%20Projects/Set%20up%20a%20TOR%20access%20point)
   Configuring the Raspberry Pi to act as a WiFi router that routes all traffic through the TOR network for enhanced anonymity. It's a relatively easy and very popular project for creating a "privacy-focused" router.
   <!--  Interest score = 8/10  -->
-- ### **🌊 Configure QBitTorrent Client**
+- ### 🌊[** Configure QBitTorrent Client**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Server%20%26%20Network%20Infrastructure%20Projects/Configure%20QBitTorrent%20Client)
   Setting up a headless torrent client on the Raspberry Pi, often with a web interface for remote management. This project turns the Pi into a low-power, always-on download machine, appealing to a wide range of users.
   <!--  Interest score = 9/10  -->
-- ### **🧅 Host a Darkweb Site with Onion Server**
+- ### 🧅[** Host a Darkweb Site with Onion Server**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Server%20%26%20Network%20Infrastructure%20Projects/Host%20a%20Darkweb%20Site%20with%20Onion%20Server)
   Configuring a web server on the Pi to be accessible only through the TOR network. It's for users with a specific purpose who understand the dark web's implications.
   <!--  Interest score = 4/10  -->
 - ### **🛡️ Proxy Server Setup**
@@ -220,7 +223,7 @@ Here there is a description for each sub-folders in this repository:
 - ### **🧑‍💻 TeamViewer Remote Access**
   Installing and configuring TeamViewer on the Raspberry Pi for remote control. Popular for its ease of use. While not as "DIY" as VNC, it's a great option for those who want a simple, cross-platform remote access solution.
   <!--  Interest score = 7/10  -->
-- ### **🚫 Pi-Hole Network-wide Ad-Blocker**
+- ### 🚫[** Pi-Hole Network-wide Ad-Blocker**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Server%20%26%20Network%20Infrastructure%20Projects/Pi-Hole%20Network-wide%20Ad-Blocker)
   A highly popular project that turns the Pi into a DNS-based ad blocker for the entire network. This is arguably one of the most well-known and widely-implemented Raspberry Pi projects. It offers a massive, immediate benefit to every device on a network. No more pubblicity!!!
   <!--  Interest score = 10/10  -->
 - ### **🛡️ Block Ads with AdGuard Home**
