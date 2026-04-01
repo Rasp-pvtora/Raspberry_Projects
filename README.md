@@ -21,6 +21,9 @@ If you find this project helpful, you can support my work with a small donation.
 Here there is a description for each sub-folders in this repository:
 
 ## 🧠 Smart & Security Projects
+- ### 📡[** Tor Security Node — Webservice & Remote GPIO**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/2ca5e7560cb082d1f2271ffbc459b51a1847b215/Smart%20%26%20Security%20Projects/Tor%20Security%20Node%20-%20Webservice%20%26%20remote%20GPIO)
+  An all-in-one Tor security node with a web-based dashboard for Raspberry Pi. Host a .onion website, monitor system health, manage a Tor WiFi access point, and control GPIO pins — all from a single web interface.
+  <!--  Interest score = 9/10  -->
 - ### **🗣️ Set Up ALEXA with Amazon Voice Service**
   Using the Alexa Voice Service API to turn the Raspberry Pi into a custom Alexa smart speaker. It's a great way to explore voice-activated assistants.
   <!--  Interest score = 8/10  -->
