@@ -60,17 +60,22 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // --- Security middleware ---
+const cspDirectives = {
+  defaultSrc: ["'self'"],
+  scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+  styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
+  fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
+  imgSrc: ["'self'", "data:"],
+  connectSrc: ["'self'", "ws:", "wss:"]
+};
+// Only add upgrade-insecure-requests when HTTPS is active
+if (!HTTPS_ENABLED) {
+  cspDirectives.upgradeInsecureRequests = null;
+}
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-      fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "ws:", "wss:"]
-    }
-  }
+  contentSecurityPolicy: { directives: cspDirectives },
+  // Disable HSTS when running plain HTTP
+  strictTransportSecurity: HTTPS_ENABLED
 }));
 
 // Rate-limit login attempts

@@ -28,6 +28,7 @@
     "express-session": "^1.18.1",
     "helmet": "^8.0.0",
     "multer": "^1.4.5-lts.1",
+    "nan": "^2.26.2",
     "onoff": "^6.0.3",
     "selfsigned": "^2.4.1",
     "systeminformation": "^5.23.8",
