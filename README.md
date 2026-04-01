@@ -54,7 +54,7 @@ Here there is a description for each sub-folders in this repository:
 - ### **🚗 Local Road Traffic AI-Monitoring System**
   A traffic intelligence platform that uses edge AI on a Raspberry Pi to track vehicles, calculate speed, and detect accidents in real time. 
   <!--  Interest score = 10/10  -->
-- ### **☀️ Solar Panel Follower**
+- ### [**☀️ Solar Panel Follower**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/919b5cf2e1762046508701182b7066a947f2e624/Smart%20%26%20Security%20Projects/Solar%20Panel%20Follower)
   An intelligent solar tracking system that uses servos and light sensors to maximize energy absorption, with machine learning to predict optimal angles.
   <!--  Interest score = 10/10  -->
 - ### **🅿️ Private Auto Parking AI-Monitoring**
