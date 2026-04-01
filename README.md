@@ -42,7 +42,7 @@ Here there is a description for each sub-folders in this repository:
 - ### **🕵️ Secure Raspberry Pi Zero W VPN Server**
   Turn a Raspberry Pi Zero W into a compact and low-power VPN server. This allows you to create a secure tunnel to your home network, so you can safely access your files and browse the internet securely when you're away from home.
   <!--  Interest score = 9/10  -->
-- ### **🔔 Doorbell with Facial Recognition**
+- ### 🔔[** Doorbell with Facial Recognition**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/7c18e78c0d141d7fc546d4fecf70f8dea3dff1ca/Smart%20%26%20Security%20Projects/Doorbell%20with%20Facial%20Recognition)
   Upgrade a standard doorbell with a Raspberry Pi camera and facial recognition software. The system can identify known individuals and send different notifications or trigger different actions based on who is at the door. A possibility to save a photo and send as message on the phone is added. Is also possible to listen remotly or even speak (example talk with the postman to give detailed informations on live)
   <!--  Interest score = 10/10  -->
 - ### **🖼️ Digital Photo Frame with Facial Recognition**
