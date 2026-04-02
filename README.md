@@ -162,24 +162,24 @@ Here there is a description for each sub-folders in this repository:
   <!--  Interest score = 9/10  -->
 
 ## 🖥️ Hardware & Networking Projects
-- ### **🧾 GPIOs datastorage file**
-  Logging data from GPIO pins to a file, such as sensor readings or button presses. It's a simple yet crucial step for data logging and analysis.
-  <!--  Interest score = 7/10  -->
-- ### **📡 Create a Wifi-Extender fro the Ethernet**
-  Configuring the Raspberry Pi to act as a WiFi access point and share an internet connection from an Ethernet cable.
-  <!--  Interest score = 9/10  -->
-- ### **🚛 Send and Receive CAN an CANopen messages**
-  A specialized project for industrial automation or automotive applications, allowing to communicate over a CAN bus. This is for advanced users with specific, professional applications in mind.
-  <!--  Interest score = 4/10  -->
+- ### 📊 [**GPIO Data Logger & Pin Manager**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/GPIO%20Data%20Logger%20%26%20Pin%20Manager)
+  A multi-format GPIO data logging and pin configuration system with MCP3008 ADC analog support, CSV/JSON/SQLite storage, configurable polling, threshold alerts, Chart.js visualization, pin grouping, edge-triggered logging, data retention policies, and export — all toggleable from a dark-theme web dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 📡 [**WiFi Extender & Access Point Manager**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/WiFi%20Extender%20%26%20Access%20Point%20Manager)
+  A full-featured hostapd + dnsmasq WiFi access point manager with SSID management, bandwidth monitoring, MAC filtering, captive portal, QoS traffic shaping, WiFi scheduling, auto channel selection, dual-band support, VPN passthrough, and health monitoring — all toggleable from a dark-theme web dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 🚛 [**CAN Bus & CANopen Communication Hub**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/CAN%20Bus%20%26%20CANopen%20Communication%20Hub)
+  An MCP2515 SocketCAN communication hub with live message viewer, DBC signal decoding, message sender/recorder/replay, CANopen NMT/SDO/PDO management, Object Dictionary browser, bus diagnostics, CAN↔TCP bridge, heartbeat monitoring, and analytics — all toggleable from a dark-theme web dashboard.
+  <!--  Interest score = 10/10  -->
 - ### **📧 Read and write RFID with RC522 module**
   Using an RC522 module to read and write data to RFID tags. A project very popular, especially for security and access control applications (e.g., electronic door locks).
   <!--  Interest score = 9/10  -->
-- ### **🏭 Set the Raspberry as a OPC-UA server**
-  A highly specialized project for industrial communication protocols, allowing the Pi to act as a server for factory automation systems.
-  <!--  Interest score = 2/10  -->
-- ### **🔌 Send and Receive RS232 messages**
-  Using a serial adapter to enable the Raspberry Pi to communicate with legacy devices over the RS232 protocol involving older hardware.
-  <!--  Interest score = 2/10  -->
+- ### 🏭 [**OPC-UA Industrial Gateway**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/OPC-UA%20Industrial%20Gateway)
+  An opcua-asyncio OPC-UA server with GPIO/CAN/RS232/Modbus data source plugins, dynamic node creation, address space browser, historical data access, alarms & conditions, X.509 certificate security, Node-RED integration, REST API proxy, CODESYS info, and diagnostics — all toggleable from a dark-theme web dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 🔌 [**RS232 Serial Communication Manager**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/RS232%20Serial%20Communication%20Manager)
+  A multi-port RS232/UART serial communication dashboard with hex/ASCII dual view, Modbus RTU templates, CRC calculators, message macros, auto-response rules, serial↔TCP bridging, protocol analysis, session recording, scripting engine, and real-time data plotting — all toggleable from a dark-theme web dashboard.
+  <!--  Interest score = 10/10  -->
 - ### **📻 FM-Transmitter radio**
   Turning the Raspberry Pi into a low-power FM radio transmitter to broadcast audio over a short range.
   <!--  Interest score = 8/10  -->
