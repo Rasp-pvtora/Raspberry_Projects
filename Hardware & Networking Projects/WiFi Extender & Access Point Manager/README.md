@@ -47,7 +47,7 @@ Every feature is independently toggleable both via `.env` and the web dashboard:
 ## 🎛️ Dashboard Feature Toggles
 
 The web dashboard provides a **Settings → Feature Toggles** page where each feature can be enabled/disabled in real time without restarting the service. Toggle state is persisted to `.env` and SQLite.
-
+```
 ┌──────────────────────────────────────────────────┐
 │  ⚙️ Feature Toggles              [Save All]      │
 ├──────────────────────────────────────────────────┤
@@ -67,7 +67,7 @@ The web dashboard provides a **Settings → Feature Toggles** page where each fe
 │  📋 Connection Log             [████ ON ]         │
 │  💚 Health Monitor             [████ ON ]         │
 └──────────────────────────────────────────────────┘
-
+```
 ---
 
 ## 🔩 Hardware Requirements
