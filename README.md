@@ -78,6 +78,33 @@ Here there is a description for each sub-folders in this repository:
 - ### **🚌 AI-Smart Public Transport Tracker and Security System**
   A system that uses AI and GPS on a Raspberry Pi to track public transport, count passengers, and even detect crowd density and potential incidents. Can also monitor if any harrasment, assault or violance are happening and call police for real support. 
   <!--  Interest score = 10/10  -->
+- ### 🔍 [**AI-Powered Visual Inspection Platform**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/AI-Powered%20Visual%20Inspection%20Platform)
+  A dual-mode AI visual inspection system using YOLOv8 on Raspberry Pi for real-time quality control defect detection and PPE compliance monitoring with web dashboard and GPIO reject mechanisms.
+  <!--  Interest score = 10/10  -->
+- ### 🤟 [**AI-Powered Sign Language to Text Translator**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/AI-Powered%20Sign%20Language%20to%20Text%20Translator)
+  Real-time sign language recognition using MediaPipe hand tracking and LSTM neural networks, supporting ASL/BSL/DGS/LSF with text-to-speech output and two-way communication.
+  <!--  Interest score = 10/10  -->
+- ### 📶 [**Rogue Access Point Detector**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/Rogue%20Access%20Point%20Detector)
+  A WiFi security scanner that uses monitor-mode to detect Evil Twin attacks, rogue access points, and deauth floods with GPS war-driving and a real-time alert dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 🎤 [**AI Meeting Assistant**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/AI%20Meeting%20Assistant)
+  A fully local, privacy-first meeting transcription and summarization device using Whisper for speech-to-text and TinyLlama for AI summaries — no audio ever leaves the device.
+  <!--  Interest score = 10/10  -->
+- ### 🗣️ [**LLM-Powered Voice Assistant with Physical Feedback**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/LLM-Powered%20Voice%20Assistant%20with%20Physical%20Feedback)
+  A next-gen voice assistant (v2) using Ollama LLM to understand natural language intent and trigger physical GPIO actions like relays, lights, and alarms with multi-room Wyoming Protocol support.
+  <!--  Interest score = 10/10  -->
+- ### 🌐 [**Multi-Language Visual-Audio Translator**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/Multi-Language%20Visual-Audio%20Translator)
+  A dual-mode translation station: OCR camera text or speech-to-text microphone input, translated locally via LLM and spoken aloud via Piper TTS, with live conversation mode.
+  <!--  Interest score = 10/10  -->
+- ### 🦆 [**Automated Rubber Ducky HID Attack Platform**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/Automated%20Rubber%20Ducky%20HID%20Attack%20Platform)
+  A Raspberry Pi 4 USB-C OTG acting as a HID keyboard to execute DuckyScript payloads with WiFi AP editing, target OS detection, and a categorized payload library for authorized penetration testing.
+  <!--  Interest score = 10/10  -->
+- ### 🧊 [**Air-Gapped Cold Storage Crypto Wallet**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/Air-Gapped%20Cold%20Storage%20Crypto%20Wallet)
+  A permanently offline Raspberry Pi for BIP-39 key generation and QR-code-based transaction signing, with multi-coin support, multisig wallets, and physical tamper detection.
+  <!--  Interest score = 10/10  -->
+- ### 🤖 [**Local LLM PrivateGPT**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/Local%20LLM%20PrivateGPT)
+  A self-hosted, fully offline document Q&A system using Ollama RAG pipeline — upload PDFs and documents, embed into ChromaDB, and get grounded answers with source citations.
+  <!--  Interest score = 10/10  -->
   
 ## 💡Home & IoT Automation Projects
 - ### [**💻 Control GPIOs from a website**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Home%20%26%20IoT%20Automation%20Projects/Control%20GPIOs%20from%20a%20website)
@@ -113,6 +140,9 @@ Here there is a description for each sub-folders in this repository:
 - ### **🖨️ Wireless Printer Server**
   Turning an old, wired printer into a wireless one by connecting it to a Raspberry Pi. The Pi, running a program like CUPS, acts as a print server that all devices on the network can connect to.
   <!--  Interest score = 8/10  -->
+- ### 📡 [**LoRa Gateway & Mesh Communication Hub**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Home%20%26%20IoT%20Automation%20Projects/LoRa%20Gateway%20%26%20Mesh%20Communication%20Hub)
+  A dual-mode LoRa hub combining LoRaWAN gateway (ChirpStack/TTN) for IoT sensors and Meshtastic mesh for encrypted off-grid messaging, switchable from a web dashboard.
+  <!--  Interest score = 10/10  -->
 
 ## 🤖 Bot Projects
 - ### **📲 Build your Telegram BOT Server**
@@ -152,6 +182,12 @@ Here there is a description for each sub-folders in this repository:
   <!--  Interest score = 8/10  -->
 - ### **🌦️ Create your own Weather Station using Sense HAT**
   A project using the Sense HAT add-on board to measure environmental data like temperature, pressure, and humidity.
+  <!--  Interest score = 10/10  -->
+- ### 🏭 [**PLC Replacement with OpenPLC**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/PLC%20Replacement%20with%20OpenPLC)
+  Turn Raspberry Pi GPIOs into an IEC 61131-3 programmable logic controller with Ladder Logic, Structured Text, ScadaBR SCADA visualization, and Modbus TCP/RTU communication.
+  <!--  Interest score = 10/10  -->
+- ### 🧪 [**Seismograph Station**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Hardware%20%26%20Networking%20Projects/Seismograph%20Station)
+  A DIY seismograph station using geophone or accelerometer sensors with STA/LTA event detection, ObsPy processing, MiniSEED storage, and citizen seismology network contribution.
   <!--  Interest score = 10/10  -->
   
 ## 🍿 Media & Entertainment Projects
@@ -250,6 +286,35 @@ Here there is a description for each sub-folders in this repository:
 - ### **📝 WordPress with Apache & MySQL**
   Configuring the Pi to run a full WordPress website.This is a classic example of using the Pi to host a real-world application. It combines web server, database, and content management skills.
   <!--  Interest score = 9/10  -->
+- ### ☸️ [**Kubernetes (K3s) Edge Computing Cluster**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Server%20%26%20Network%20Infrastructure%20Projects/Kubernetes%20%28K3s%29%20Edge%20Computing%20Cluster)
+  A multi-node K3s Kubernetes cluster on 2–4 Raspberry Pis with GitOps (FluxCD), Prometheus/Grafana monitoring, Traefik ingress, and Longhorn distributed storage.
+  <!--  Interest score = 10/10  -->
+- ### 📸 [**Self-Hosted Photo Backup with Immich**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Server%20%26%20Network%20Infrastructure%20Projects/Self-Hosted%20Photo%20Backup%20with%20Immich)
+  A self-hosted Google Photos alternative on Raspberry Pi with AI-powered face recognition, object detection, and complete data sovereignty over your photo library.
+  <!--  Interest score = 10/10  -->
+- ### ⛓️ [**Blockchain Full Node**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Server%20%26%20Network%20Infrastructure%20Projects/Blockchain%20Full%20Node)
+  A full Bitcoin node verifying the entire blockchain with optional Lightning Network, BTCPay Server merchant processing, Electrum personal server, and Tor routing.
+  <!--  Interest score = 10/10  -->
+- ### 🔐 [**Quantum-Resistant VPN**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Server%20%26%20Network%20Infrastructure%20Projects/Quantum-Resistant%20VPN)
+  A WireGuard VPN hardened with post-quantum cryptography (ML-KEM/Kyber via liboqs) to protect against harvest-now-decrypt-later quantum computing attacks.
+  <!--  Interest score = 10/10  -->
+
+## ⚙️ Robotics & Mechanical Projects
+- ### 🤖 [**Autonomous SLAM Robot**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Robotics%20%26%20Mechanical%20Projects/Autonomous%20SLAM%20Robot)
+  A ROS 2 Humble wheeled robot with RPLidar A1 for real-time SLAM mapping, Nav2 autonomous navigation, web teleoperation, AprilTag docking, and obstacle avoidance.
+  <!--  Interest score = 10/10  -->
+- ### 🦾 [**AI-Vision Pick-and-Place Robotic Arm**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Robotics%20%26%20Mechanical%20Projects/AI-Vision%20Pick-and-Place%20Robotic%20Arm)
+  A 4/6-axis robotic arm with Pi Camera object detection (TFLite), ArUco marker calibration, inverse kinematics, and autonomous pick-and-place operations via web dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 🎯 [**AI-Vision Laser Targeting Turret**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Robotics%20%26%20Mechanical%20Projects/AI-Vision%20Laser%20Targeting%20Turret)
+  A 2/3-axis laser turret with Pi Camera target detection, PID tracking control, configurable safety zones, multi-target prioritization, and day/night mode via web dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 🕷️ [**Spider-Bot Hexapod Terrain Adaptation**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Robotics%20%26%20Mechanical%20Projects/Spider-Bot%20Hexapod%20Terrain%20Adaptation)
+  An 18-servo hexapod robot with tripod/wave/ripple gaits, FSR terrain adaptation, IMU stabilization, FPV camera streaming, autonomous navigation, and 3D IK visualization dashboard.
+  <!--  Interest score = 10/10  -->
+- ### 🤝 [**Haptic Feedback Shadow Arm**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Robotics%20%26%20Mechanical%20Projects/Haptic%20Feedback%20Shadow%20Arm)
+  A master/slave teleoperation arm system with potentiometer input, servo mirroring, INA219 force feedback, haptic vibration motors, 3D visualization, and movement recording/playback.
+  <!--  Interest score = 10/10  -->
   
 
 
