@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Documents — PrivateGPT{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Document Library</h1>
+</div>
+
+<div class="upload-area" id="upload-area">
+    <div class="upload-dropzone" id="upload-dropzone">
+        <p>Drag &amp; drop files here or click to browse</p>
+        <p class="upload-hint">Supported: PDF, DOCX, TXT, CSV, Markdown (max 50 MB)</p>
+        <input type="file" id="file-input" accept=".pdf,.docx,.txt,.csv,.md" hidden>
+    </div>
+    <div id="upload-progress" class="upload-progress" style="display:none;">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <p id="upload-status">Uploading...</p>
+    </div>
+</div>
+
+<div class="documents-table-wrapper">
+    <table class="documents-table" id="documents-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Chunks</th>
+                <th>Status</th>
+                <th>Uploaded</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="documents-body">
+            <tr><td colspan="7">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/documents.js') }}"></script>
+{% endblock %}

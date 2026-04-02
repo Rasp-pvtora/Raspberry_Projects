@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PrivateGPT{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% if session.get('logged_in') %}
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>PrivateGPT</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard.dashboard_page') }}" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a></li>
+            <li><a href="{{ url_for('chat.chat_page') }}" class="{% if request.path == '/chat' %}active{% endif %}">Chat</a></li>
+            <li><a href="{{ url_for('documents.documents_page') }}" class="{% if request.path == '/documents' %}active{% endif %}">Documents</a></li>
+            <li><a href="{{ url_for('compare.compare_page') }}" class="{% if request.path == '/compare' %}active{% endif %}">Compare</a></li>
+            <li><a href="{{ url_for('models.models_page') }}" class="{% if request.path == '/models' %}active{% endif %}">Models</a></li>
+            <li><a href="{{ url_for('settings.settings_page') }}" class="{% if request.path == '/settings' %}active{% endif %}">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
+    </nav>
+    {% endif %}
+
+    <main class="{% if session.get('logged_in') %}with-sidebar{% endif %}">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

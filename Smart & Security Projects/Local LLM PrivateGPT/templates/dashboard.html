@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard — PrivateGPT{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+</div>
+
+<div class="stats-grid" id="stats-grid">
+    <div class="stat-card"><h3>Documents</h3><p id="stat-documents">—</p></div>
+    <div class="stat-card"><h3>Chunks</h3><p id="stat-chunks">—</p></div>
+    <div class="stat-card"><h3>Conversations</h3><p id="stat-conversations">—</p></div>
+    <div class="stat-card"><h3>Messages</h3><p id="stat-messages">—</p></div>
+</div>
+
+<div class="dashboard-panels">
+    <div class="panel">
+        <h2>System Info</h2>
+        <div id="system-info"><p>Loading...</p></div>
+    </div>
+    <div class="panel">
+        <h2>Recent Activity</h2>
+        <div id="recent-activity"><p>Loading...</p></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    fetch('/dashboard/stats')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('stat-documents').textContent = data.documents;
+            document.getElementById('stat-chunks').textContent = data.chunks;
+            document.getElementById('stat-conversations').textContent = data.conversations;
+            document.getElementById('stat-messages').textContent = data.messages;
+
+            const sys = data.system || {};
+            document.getElementById('system-info').innerHTML =
+                `<p>Platform: ${sys.platform || 'N/A'}</p>` +
+                `<p>Python: ${sys.python || 'N/A'}</p>` +
+                `<p>CPU Temp: ${sys.cpu_temp || 'N/A'}</p>` +
+                `<p>RAM: ${sys.ram?.used_mb || 0} / ${sys.ram?.total_mb || 0} MB (${sys.ram?.percent || 0}%)</p>` +
+                `<p>Disk: ${sys.disk?.used_gb || 0} / ${sys.disk?.total_gb || 0} GB (${sys.disk?.percent || 0}%)</p>`;
+
+            const activity = data.recent_activity || [];
+            if (activity.length === 0) {
+                document.getElementById('recent-activity').innerHTML = '<p>No activity yet.</p>';
+            } else {
+                document.getElementById('recent-activity').innerHTML = activity.map(a =>
+                    `<div class="activity-item"><span class="badge badge-${a.role}">${a.role}</span> ${a.content} <small>${a.created_at}</small></div>`
+                ).join('');
+            }
+        });
+</script>
+{% endblock %}

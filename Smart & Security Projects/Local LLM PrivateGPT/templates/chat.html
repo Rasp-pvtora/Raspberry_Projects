@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Chat — PrivateGPT{% endblock %}
+
+{% block content %}
+<div class="chat-layout">
+    <aside class="chat-sidebar" id="chat-sidebar">
+        <button class="btn btn-sm" id="new-conversation-btn">+ New Chat</button>
+        <ul id="conversation-list"></ul>
+    </aside>
+    <div class="chat-main">
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-welcome">
+                <h2>Ask a question about your documents</h2>
+                <p>Upload documents first, then ask anything.</p>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <div id="chat-status" class="chat-status"></div>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type your question..." autocomplete="off">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

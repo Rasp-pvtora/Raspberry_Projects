@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Compare — PrivateGPT{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Document Comparison</h1>
+</div>
+
+<div class="compare-form">
+    <div class="form-group">
+        <label for="doc-a">Document A</label>
+        <select id="doc-a" class="form-select"><option value="">Loading...</option></select>
+    </div>
+    <div class="form-group">
+        <label for="doc-b">Document B</label>
+        <select id="doc-b" class="form-select"><option value="">Loading...</option></select>
+    </div>
+    <button class="btn btn-primary" id="compare-btn">Compare</button>
+</div>
+
+<div class="compare-result" id="compare-result" style="display:none;">
+    <h2>Comparison Result</h2>
+    <div id="compare-content"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/compare.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Settings — PrivateGPT{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Settings</h1>
+</div>
+
+<div class="settings-panels">
+    <div class="panel">
+        <h2>Change Password</h2>
+        <form id="password-form">
+            <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new_password" minlength="6" required autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Password</button>
+            <p id="password-msg" class="form-message"></p>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2>Export Q&amp;A History</h2>
+        <p>Download all questions and answers as a CSV file.</p>
+        <a href="{{ url_for('settings.settings_export') }}" class="btn btn-secondary">Download CSV</a>
+    </div>
+
+    <div class="panel">
+        <h2>Current Configuration</h2>
+        <div id="config-display"><p>Loading...</p></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPw = document.getElementById('new-password').value;
+        const res = await fetch('/settings/password', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ new_password: newPw })
+        });
+        const data = await res.json();
+        document.getElementById('password-msg').textContent = data.message || data.error;
+    });
+
+    fetch('/settings/config')
+        .then(r => r.json())
+        .then(data => {
+            const el = document.getElementById('config-display');
+            el.innerHTML = Object.entries(data).map(([k, v]) =>
+                `<div class="config-row"><strong>${k}</strong>: ${v}</div>`
+            ).join('');
+        });
+</script>
+{% endblock %}
