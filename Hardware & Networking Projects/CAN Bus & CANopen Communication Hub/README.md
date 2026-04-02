@@ -52,22 +52,22 @@ The web dashboard provides a **Settings → Feature Toggles** page where each fe
 ┌──────────────────────────────────────────────────┐
 │  ⚙️ Feature Toggles              [Save All]      │
 ├──────────────────────────────────────────────────┤
-│  🔧 SocketCAN Auto-Config      [████ ON ]         │
-│  📺 Live Message Viewer        [████ ON ]         │
-│  🔓 DBC Signal Decoder         [░░░░ OFF]         │
-│  📤 Message Sender             [████ ON ]         │
-│  ⏺️ Message Recorder            [████ ON ]         │
-│  ▶️ Message Replay              [░░░░ OFF]         │
-│  🎛️ CANopen NMT Manager        [░░░░ OFF]         │
-│  📝 CANopen SDO Client         [░░░░ OFF]         │
-│  🔄 CANopen PDO Mapping        [░░░░ OFF]         │
-│  📖 Object Dictionary Browser  [░░░░ OFF]         │
-│  🔍 Bus Diagnostics            [████ ON ]         │
-│  🌐 CAN↔TCP Bridge             [░░░░ OFF]         │
-│  💚 Heartbeat Monitor          [░░░░ OFF]         │
-│  🔎 Message Filtering          [████ ON ]         │
-│  🔔 Notifications              [░░░░ OFF]         │
-│  📊 Analytics                  [████ ON ]         │
+│  🔧 SocketCAN Auto-Config      [████ ON ]        │
+│  📺 Live Message Viewer        [████ ON ]        │
+│  🔓 DBC Signal Decoder         [░░░░ OFF]        │
+│  📤 Message Sender             [████ ON ]        │
+│  ⏺️ Message Recorder           [████ ON ]        │
+│  ▶️ Message Replay             [░░░░ OFF]        │
+│  🎛️ CANopen NMT Manager        [░░░░ OFF]        │
+│  📝 CANopen SDO Client         [░░░░ OFF]        │
+│  🔄 CANopen PDO Mapping        [░░░░ OFF]        │
+│  📖 Object Dictionary Browser  [░░░░ OFF]        │
+│  🔍 Bus Diagnostics            [████ ON ]        │
+│  🌐 CAN↔TCP Bridge             [░░░░ OFF]        │
+│  💚 Heartbeat Monitor          [░░░░ OFF]        │
+│  🔎 Message Filtering          [████ ON ]        │
+│  🔔 Notifications              [░░░░ OFF]        │
+│  📊 Analytics                  [████ ON ]        │
 └──────────────────────────────────────────────────┘
 
 ---
