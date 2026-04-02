@@ -1,0 +1,33 @@
+# Python dependencies — AI-Powered Sign Language to Text Translator
+
+# Web framework
+Flask==3.1.0
+Flask-SocketIO==5.4.0
+
+# Hand tracking
+mediapipe==0.10.14
+
+# Model inference (Pi-optimized)
+# On Raspberry Pi use: tflite-runtime==2.14.0
+# On desktop for development use tensorflow:
+# tensorflow==2.16.0
+numpy==1.26.4
+
+# Camera
+opencv-python-headless==4.10.0.84
+
+# TTS
+piper-tts==1.2.0
+
+# Environment and security
+python-dotenv==1.0.1
+bcrypt==4.2.0
+
+# Templates (included with Flask)
+Jinja2==3.1.4
+
+# WebSocket transport
+eventlet==0.36.1
+
+# Dev / Testing
+pytest==8.3.4

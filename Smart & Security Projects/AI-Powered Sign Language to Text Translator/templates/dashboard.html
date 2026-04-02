@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% set kiosk_mode = false %}
+{% block title %}Dashboard — Sign Language Translator{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Live Recognition</h1>
+
+    <div class="dashboard-grid">
+        <!-- Camera feed with hand skeleton overlay -->
+        <div class="panel panel-camera">
+            <h2>Camera Feed</h2>
+            <div class="camera-container">
+                <canvas id="handCanvas" width="640" height="480"></canvas>
+                <img id="cameraFeed" alt="Camera feed">
+            </div>
+        </div>
+
+        <!-- Recognition output -->
+        <div class="panel panel-recognition">
+            <h2>Recognition</h2>
+            <div class="current-sign">
+                <span id="signLabel">—</span>
+                <div class="confidence-bar">
+                    <div id="confidenceLevel" class="confidence-fill" style="width: 0%"></div>
+                </div>
+                <span id="confidenceText">0%</span>
+            </div>
+
+            <h3>Building Sentence</h3>
+            <p id="currentSentence" class="sentence-display">Waiting for signs...</p>
+
+            <h3>Completed Sentences</h3>
+            <div id="sentenceHistory" class="sentence-history"></div>
+        </div>
+
+        <!-- System info -->
+        <div class="panel panel-system">
+            <h2>System</h2>
+            <ul>
+                <li>Platform: {{ system.platform }}</li>
+                <li>Python: {{ system.python }}</li>
+                <li>Load: {{ system.load_1m }} / {{ system.load_5m }} / {{ system.load_15m }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

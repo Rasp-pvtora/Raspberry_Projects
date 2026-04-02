@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% set kiosk_mode = false %}
+{% block title %}Login — Sign Language Translator{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <h1>Sign Language Translator</h1>
+    <h2>Login</h2>
+    <form method="POST" action="{{ url_for('auth.login') }}">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autocomplete="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}

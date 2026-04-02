@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% set kiosk_mode = false %}
+{% block title %}Learning — Sign Language Translator{% endblock %}
+
+{% block content %}
+<div class="learning">
+    <h1>Learning Mode</h1>
+
+    {% if not enabled %}
+    <p class="warning">Learning mode is disabled. Enable it in Settings.</p>
+    {% else %}
+    <div class="learning-grid">
+        <div class="panel panel-prompt">
+            <h2>Sign This</h2>
+            <div class="difficulty-select">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty">
+                    <option value="alphabet">Alphabet</option>
+                    <option value="words">Common Words</option>
+                    <option value="phrases">Phrases</option>
+                </select>
+            </div>
+            <div id="promptWord" class="prompt-word">Press Start</div>
+            <button id="btnStart" class="btn btn-primary">Start Practice</button>
+            <button id="btnNext" class="btn btn-secondary" disabled>Next</button>
+        </div>
+
+        <div class="panel panel-camera">
+            <h2>Your Sign</h2>
+            <div class="camera-container">
+                <canvas id="handCanvas" width="640" height="480"></canvas>
+                <img id="cameraFeed" alt="Camera feed">
+            </div>
+        </div>
+
+        <div class="panel panel-result">
+            <h2>Result</h2>
+            <div id="gradeResult" class="grade-result">—</div>
+        </div>
+
+        <div class="panel panel-progress">
+            <h2>Your Progress</h2>
+            <div id="progressTable"></div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/learning.js') }}"></script>
+{% endblock %}

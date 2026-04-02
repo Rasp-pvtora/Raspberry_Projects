@@ -1,0 +1,43 @@
+# ─── Python ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ─── Virtual environment ────────────────────────────────
+venv/
+.venv/
+env/
+
+# ─── Environment variables ──────────────────────────────
+.env
+
+# ─── Database ───────────────────────────────────────────
+data/sign_language.db
+
+# ─── IDE ────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── OS ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Models (large files) ──────────────────────────────
+models/*.h5
+models/*.tflite
+models/piper/
+
+# ─── Training data ─────────────────────────────────────
+data/training_data/
+
+# ─── Logs ───────────────────────────────────────────────
+*.log

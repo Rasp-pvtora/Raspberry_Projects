@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% set kiosk_mode = false %}
+{% block title %}Settings — Sign Language Translator{% endblock %}
+
+{% block content %}
+<div class="settings">
+    <h1>Settings</h1>
+
+    <form id="settingsForm">
+        <div class="settings-grid">
+            <!-- Sign Language -->
+            <div class="panel">
+                <h2>Sign Language</h2>
+                <div class="form-group">
+                    <label for="signLanguage">Language</label>
+                    <select id="signLanguage" name="sign_language">
+                        {% for lang in languages %}
+                        <option value="{{ lang.code }}" {% if lang.active %}selected{% endif %}
+                            {% if not lang.available %}disabled{% endif %}>
+                            {{ lang.name }} {% if not lang.available %}(model not found){% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="confidenceThreshold">Confidence Threshold</label>
+                    <input type="range" id="confidenceThreshold" name="confidence_threshold"
+                        min="0.1" max="1.0" step="0.05" value="0.7">
+                    <span id="thresholdValue">0.7</span>
+                </div>
+            </div>
+
+            <!-- Sentence -->
+            <div class="panel">
+                <h2>Sentence Recognition</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="sentenceEnabled" name="sentence_enabled" checked>
+                        Enable sentence building
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="sentencePause">Pause duration (sec)</label>
+                    <input type="number" id="sentencePause" name="sentence_pause_sec"
+                        value="2.0" min="0.5" max="10" step="0.5">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="twoHandEnabled" name="two_hand_enabled" checked>
+                        Enable two-hand recognition
+                    </label>
+                </div>
+            </div>
+
+            <!-- TTS -->
+            <div class="panel">
+                <h2>Text-to-Speech</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="ttsEnabled" name="tts_enabled">
+                        Enable TTS output
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="ttsVoice">Voice</label>
+                    <input type="text" id="ttsVoice" name="tts_voice" value="en_US-lessac-medium">
+                </div>
+            </div>
+
+            <!-- Kiosk -->
+            <div class="panel">
+                <h2>Kiosk Mode</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="kioskMode" name="kiosk_mode">
+                        Enable kiosk mode
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="kioskTimeout">Auto-reset timeout (sec)</label>
+                    <input type="number" id="kioskTimeout" name="kiosk_timeout_sec"
+                        value="60" min="10" max="600" step="10">
+                </div>
+            </div>
+
+            <!-- Data Collection -->
+            <div class="panel">
+                <h2>Data Collection</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="dataCollection" name="data_collection_enabled">
+                        Enable training data collection
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+        confidence_threshold: parseFloat(form.confidence_threshold.value),
+        sentence_enabled: form.sentence_enabled.checked,
+        sentence_pause_sec: parseFloat(form.sentence_pause_sec.value),
+        two_hand_enabled: form.two_hand_enabled.checked,
+        tts_enabled: form.tts_enabled.checked,
+        tts_voice: form.tts_voice.value,
+        kiosk_mode: form.kiosk_mode.checked,
+        kiosk_timeout_sec: parseInt(form.kiosk_timeout_sec.value),
+        data_collection_enabled: form.data_collection_enabled.checked,
+    };
+
+    // Update language separately
+    const langSelect = document.getElementById('signLanguage');
+    await fetch('/settings/api/language', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({language: langSelect.value}),
+    });
+
+    const resp = await fetch('/settings/api/update', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data),
+    });
+    if (resp.ok) alert('Settings saved.');
+});
+
+document.getElementById('confidenceThreshold').addEventListener('input', (e) => {
+    document.getElementById('thresholdValue').textContent = e.target.value;
+});
+</script>
+{% endblock %}

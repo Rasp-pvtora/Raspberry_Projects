@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk — Sign Language Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background: #000; color: #fff; }
+        .kiosk-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100vh;
+            gap: 0;
+        }
+        .kiosk-camera { display: flex; align-items: center; justify-content: center; background: #111; }
+        .kiosk-camera img, .kiosk-camera canvas { max-width: 100%; max-height: 100vh; }
+        .kiosk-text {
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 2rem; font-size: 2rem;
+        }
+        .kiosk-sign { font-size: 4rem; font-weight: bold; margin-bottom: 1rem; }
+        .kiosk-sentence { font-size: 2.5rem; line-height: 1.4; }
+        .kiosk-confidence { margin-top: 1rem; }
+        .kiosk-confidence-bar { height: 20px; background: #333; border-radius: 10px; overflow: hidden; }
+        .kiosk-confidence-fill { height: 100%; background: #0f0; transition: width 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="kiosk-container">
+        <div class="kiosk-camera">
+            <canvas id="handCanvas" width="640" height="480"></canvas>
+            <img id="cameraFeed" alt="Camera feed" style="display:none">
+        </div>
+        <div class="kiosk-text">
+            <div id="signLabel" class="kiosk-sign">Ready</div>
+            <div class="kiosk-confidence">
+                <div class="kiosk-confidence-bar">
+                    <div id="confidenceLevel" class="kiosk-confidence-fill" style="width:0%"></div>
+                </div>
+            </div>
+            <div id="currentSentence" class="kiosk-sentence">Show a sign to begin...</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/kiosk.js') }}"></script>
+    <script>
+        const KIOSK_TIMEOUT = {{ timeout }} * 1000;
+    </script>
+</body>
+</html>
