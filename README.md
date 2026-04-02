@@ -119,14 +119,14 @@ Here there is a description for each sub-folders in this repository:
 - ### **🌱 Smart Hydroponic Nutrient Optimizer**
   A next-gen hydroponics system that uses edge AI and advanced sensors for predictive nutrient optimization and automated dosing. Very similar to the "Green-House" project, but focused on soil-less farming. The use of AI for predictive optimization and automation makes it a professional-grade system for growers and a fantastic learning tool.
   <!--  Interest score = 10/10  -->
-- ### **🚪 Smart Garage Door Opener**
-  Control your garage door remotely with a Raspberry Pi and a relay. This project allows you to open and close your garage from anywhere using a smartphone app or a web interface. You can also add a sensor to check the door's status and receive notifications if it's left open.
+- ### 🚪 [**Smart Garage Door & Secure Access Ecosystem**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Home%20%26%20IoT%20Automation%20Projects/Smart%20Garage%20Door%20%26%20Secure%20Access%20Ecosystem)
+  A comprehensive garage access system with ALPR auto-open, geofencing, delivery mode, tamper detection, voice control, night-mode IR camera, vacation mode, guest access codes, and multi-channel notifications — all toggleable from a dark-theme web dashboard.
   <!--  Interest score = 9/10  -->
-- ### **🐶 Smart Pet Feeder**
-  Build a motorized pet feeder controlled by a Raspberry Pi. The feeder can be programmed to dispense food at specific times or water if the level is too low. Can be monitored remotely and is possible also to add a camera to check on your pet.
+- ### 🐶 [**Smart Pet Feeder & Health Monitor**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Home%20%26%20IoT%20Automation%20Projects/Smart%20Pet%20Feeder%20%26%20Health%20Monitor)
+  An automated pet feeding and health monitoring system with facial recognition, RFID collar tags, weight tracking, eating speed analysis, behavioral health alerts, treat launcher, medication dispenser, and vet-export analytics — all toggleable from a dark-theme web dashboard.
   <!--  Interest score = 10/10  -->
-- ### **🐟 IoT-Based Smart Aquaponics System**
-  A sophisticated system for automating and optimizing an aquaponics setup using multiple sensors and edge AI.
+- ### 🐟 [**IoT-Based Smart Aquaponics Optimizer**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Home%20%26%20IoT%20Automation%20Projects/IoT-Based%20Smart%20Aquaponics%20Optimizer)
+  A full aquaponics automation platform with pH/EC/DO sensors, predictive ammonia prevention, plant health CNN, fish counter, auto nutrient dosing, grow light control, solar integration, InfluxDB + Grafana dashboards, and a 0–100 health score engine — all toggleable from a dark-theme web dashboard.
   <!--  Interest score = 10/10  -->
 - ### **📷 Send and email with attachment (photo or text)**
   A simple project to program the Raspberry Pi to send an email, often triggered by an event like a button press or motion detection, and include an attached photo from a connected camera. This is a very common and practical project. It's a great way to learn about scripting, email protocols (SMTP), and integrating a camera module, making it very popular for security and monitoring applications.
