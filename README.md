@@ -105,6 +105,9 @@ Here there is a description for each sub-folders in this repository:
 - ### 🤖 [**Local LLM PrivateGPT**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/Local%20LLM%20PrivateGPT)
   A self-hosted, fully offline document Q&A system using Ollama RAG pipeline — upload PDFs and documents, embed into ChromaDB, and get grounded answers with source citations.
   <!--  Interest score = 10/10  -->
+- ### 🏷️ [**SmartGate AI — Adaptive Parking & Access Ecosystem**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/main/Smart%20%26%20Security%20Projects/SmartGate%20AI%20-%20Adaptive%20Parking%20%26%20Access%20Ecosystem)
+  A professional-grade ALPR parking system integrating Edge AI, Microsoft Teams/Google presence detection, NFC backup, EV charging billing, and HR time-tracking with a real-time color-coded web dashboard for companies and residential complexes.
+  <!--  Interest score = 10/10  -->
   
 ## 💡Home & IoT Automation Projects
 - ### [**💻 Control GPIOs from a website**](https://github.com/Rasp-pvtora/Raspberry_Projects/tree/bdd6a7a3a14bba67f1a292b17bd848b50ac2a1ed/Home%20%26%20IoT%20Automation%20Projects/Control%20GPIOs%20from%20a%20website)
