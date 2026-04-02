@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Bandwidth — WiFi AP Manager{% endblock %}
+{% block page_title %}Bandwidth Monitoring{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-header"><h3>↓ Total Download</h3></div>
+        <div class="card-body">
+            <div class="big-number" id="totalDownload">0 kbps</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h3>↑ Total Upload</h3></div>
+        <div class="card-body">
+            <div class="big-number" id="totalUpload">0 kbps</div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-wide">
+    <div class="card-header">
+        <h3>📈 Bandwidth Over Time</h3>
+        <div class="btn-group">
+            <button class="btn btn-sm" onclick="loadHistory(24)">24h</button>
+            <button class="btn btn-sm" onclick="loadHistory(168)">7d</button>
+            <button class="btn btn-sm" onclick="loadHistory(720)">30d</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <canvas id="bwChart" height="250"></canvas>
+    </div>
+</div>
+
+<div class="card card-wide">
+    <div class="card-header"><h3>Per-Client Bandwidth</h3></div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr><th>IP</th><th>Download (kbps)</th><th>Upload (kbps)</th></tr>
+                </thead>
+                <tbody id="perClientBw">
+                    <tr><td colspan="3" class="text-center">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/bandwidth.js') }}"></script>
+{% endblock %}

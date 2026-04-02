@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+{% block title %}MAC Filter — WiFi AP Manager{% endblock %}
+{% block page_title %}MAC Address Filtering{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>🛡️ Filter Mode</h3>
+    </div>
+    <div class="card-body">
+        <div class="radio-group">
+            <label class="radio-label">
+                <input type="radio" name="filterMode" value="whitelist" id="modeWhitelist"
+                       onchange="setMode('whitelist')"> Whitelist (only allow listed)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="filterMode" value="blacklist" id="modeBlacklist"
+                       onchange="setMode('blacklist')"> Blacklist (block listed)
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>📋 Filter Entries</h3>
+        <button class="btn btn-sm btn-primary" onclick="showAddModal()">+ Add MAC</button>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr><th>MAC Address</th><th>Description</th><th>Added</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="filterEntries">
+                    <tr><td colspan="4" class="text-center">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add MAC Modal -->
+<div class="modal" id="addMacModal" style="display:none;">
+    <div class="modal-content">
+        <h3>Add MAC Address</h3>
+        <div class="form-group">
+            <label>MAC Address</label>
+            <input type="text" id="newMac" placeholder="AA:BB:CC:DD:EE:FF" pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" id="newMacDesc" placeholder="John's Phone">
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-primary" onclick="addMac()">Add</button>
+            <button class="btn" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadFilter() {
+    try {
+        const resp = await fetch('/api/mac-filter', {headers: authHeaders()});
+        if (!resp.ok) return;
+        const data = await resp.json();
+        document.getElementById(data.mode === 'whitelist' ? 'modeWhitelist' : 'modeBlacklist').checked = true;
+        const tbody = document.getElementById('filterEntries');
+        if (!data.entries.length) {
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center">No entries</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.entries.map(e => `<tr>
+            <td><code>${esc(e.mac_address)}</code></td>
+            <td>${esc(e.description || '')}</td>
+            <td>${esc(e.created_at || '')}</td>
+            <td><button class="btn btn-sm btn-danger" onclick="removeMac('${esc(e.mac_address)}')">Remove</button></td>
+        </tr>`).join('');
+    } catch(e) { console.error(e); }
+}
+async function setMode(mode) {
+    await fetch('/api/mac-filter/mode', {method:'PUT', headers:{'Content-Type':'application/json',...authHeaders()}, body:JSON.stringify({mode})});
+    loadFilter();
+}
+function showAddModal() { document.getElementById('addMacModal').style.display='flex'; }
+function closeModal() { document.getElementById('addMacModal').style.display='none'; }
+async function addMac() {
+    const mac = document.getElementById('newMac').value;
+    const desc = document.getElementById('newMacDesc').value;
+    await fetch('/api/mac-filter', {method:'POST', headers:{'Content-Type':'application/json',...authHeaders()}, body:JSON.stringify({mac, description:desc})});
+    closeModal(); loadFilter();
+}
+async function removeMac(mac) {
+    if (!confirm('Remove ' + mac + '?')) return;
+    await fetch('/api/mac-filter/' + encodeURIComponent(mac), {method:'DELETE', headers:authHeaders()});
+    loadFilter();
+}
+function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function authHeaders() { return {}; }
+loadFilter();
+</script>
+{% endblock %}

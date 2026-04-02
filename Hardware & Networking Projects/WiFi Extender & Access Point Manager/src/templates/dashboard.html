@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard — WiFi AP Manager{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <!-- AP Status Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3>📡 Access Point Status</h3>
+            <span class="badge" id="apStatusBadge">Loading...</span>
+        </div>
+        <div class="card-body">
+            <div class="stat-row">
+                <span class="stat-label">SSID</span>
+                <span class="stat-value" id="apSSID">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Channel</span>
+                <span class="stat-value" id="apChannel">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Interface</span>
+                <span class="stat-value" id="apInterface">—</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-warning btn-sm" onclick="restartAP()">Restart AP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connected Clients -->
+    <div class="card">
+        <div class="card-header">
+            <h3>👥 Connected Clients</h3>
+        </div>
+        <div class="card-body">
+            <div class="big-number" id="clientCount">0</div>
+            <p class="stat-subtitle">devices connected</p>
+        </div>
+    </div>
+
+    <!-- Bandwidth Summary -->
+    <div class="card">
+        <div class="card-header">
+            <h3>📊 Bandwidth</h3>
+        </div>
+        <div class="card-body">
+            <div class="stat-row">
+                <span class="stat-label">↓ Download</span>
+                <span class="stat-value" id="totalRx">0 kbps</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">↑ Upload</span>
+                <span class="stat-value" id="totalTx">0 kbps</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Internet Health -->
+    <div class="card">
+        <div class="card-header">
+            <h3>💚 Internet Health</h3>
+        </div>
+        <div class="card-body">
+            <div class="stat-row">
+                <span class="stat-label">Status</span>
+                <span class="stat-value" id="internetStatus">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Latency</span>
+                <span class="stat-value" id="latency">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Packet Loss</span>
+                <span class="stat-value" id="packetLoss">—</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bandwidth Chart -->
+<div class="card card-wide">
+    <div class="card-header">
+        <h3>📈 Bandwidth History (24h)</h3>
+    </div>
+    <div class="card-body">
+        <canvas id="bandwidthChart" height="200"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

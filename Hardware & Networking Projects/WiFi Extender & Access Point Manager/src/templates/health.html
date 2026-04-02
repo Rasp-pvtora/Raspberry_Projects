@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block title %}Health — WiFi AP Manager{% endblock %}
+{% block page_title %}Network Health{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-header"><h3>🌐 Internet Status</h3></div>
+        <div class="card-body">
+            <div class="big-number" id="internetUp">—</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h3>📶 Latency</h3></div>
+        <div class="card-body">
+            <div class="big-number" id="latencyVal">— ms</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h3>📉 Packet Loss</h3></div>
+        <div class="card-body">
+            <div class="big-number" id="packetLossVal">— %</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h3>🔍 DNS Resolution</h3></div>
+        <div class="card-body">
+            <div class="big-number" id="dnsVal">— ms</div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-wide">
+    <div class="card-header"><h3>📈 Health History (24h)</h3></div>
+    <div class="card-body">
+        <canvas id="healthChart" height="250"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let healthChart;
+async function loadHealth() {
+    try {
+        const resp = await fetch('/api/health');
+        if (!resp.ok) return;
+        const d = await resp.json();
+        document.getElementById('internetUp').textContent = d.internet_up ? '✅ Online' : '❌ Offline';
+        document.getElementById('internetUp').style.color = d.internet_up ? '#4ade80' : '#f87171';
+        document.getElementById('latencyVal').textContent = d.latency_ms >= 0 ? d.latency_ms + ' ms' : 'N/A';
+        document.getElementById('packetLossVal').textContent = d.packet_loss_pct + '%';
+        document.getElementById('dnsVal').textContent = d.dns_resolve_ms >= 0 ? d.dns_resolve_ms + ' ms' : 'N/A';
+    } catch(e) { console.error(e); }
+}
+async function loadHealthHistory() {
+    try {
+        const resp = await fetch('/api/health/history?hours=24');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const labels = data.map(h => new Date(h.checked_at).toLocaleTimeString());
+        const latency = data.map(h => h.latency_ms);
+        const loss = data.map(h => h.packet_loss_pct);
+        if (healthChart) healthChart.destroy();
+        healthChart = new Chart(document.getElementById('healthChart'), {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [
+                    {label: 'Latency (ms)', data: latency, borderColor: '#60a5fa', tension: 0.3, fill: false},
+                    {label: 'Packet Loss (%)', data: loss, borderColor: '#f87171', tension: 0.3, fill: false},
+                ]
+            },
+            options: {responsive:true, plugins:{legend:{labels:{color:'#e2e8f0'}}}, scales:{x:{ticks:{color:'#94a3b8'}},y:{ticks:{color:'#94a3b8'}}}}
+        });
+    } catch(e) { console.error(e); }
+}
+loadHealth();
+loadHealthHistory();
+setInterval(loadHealth, 30000);
+
+const socket = io();
+socket.on('health_update', (data) => {
+    document.getElementById('internetUp').textContent = data.internet_up ? '✅ Online' : '❌ Offline';
+    document.getElementById('latencyVal').textContent = data.latency_ms >= 0 ? data.latency_ms + ' ms' : 'N/A';
+    document.getElementById('packetLossVal').textContent = data.packet_loss_pct + '%';
+    document.getElementById('dnsVal').textContent = data.dns_resolve_ms >= 0 ? data.dns_resolve_ms + ' ms' : 'N/A';
+});
+</script>
+{% endblock %}

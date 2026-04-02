@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block title %}Schedule — WiFi AP Manager{% endblock %}
+{% block page_title %}WiFi Schedule{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>🕐 WiFi On/Off Schedule</h3>
+        <div>
+            <button class="btn btn-sm btn-success" onclick="overrideAction('force_on')">Force ON</button>
+            <button class="btn btn-sm btn-danger" onclick="overrideAction('force_off')">Force OFF</button>
+            <button class="btn btn-sm" onclick="overrideAction('clear')">Clear Override</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr><th>Day</th><th>On Time</th><th>Off Time</th><th>Enabled</th></tr>
+                </thead>
+                <tbody id="scheduleBody">
+                    <tr><td colspan="4" class="text-center">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-actions" style="margin-top:1rem;">
+            <button class="btn btn-primary" onclick="saveSchedule()">Save Schedule</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
+const DAY_NAMES = {mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
+let scheduleData = [];
+
+async function loadSchedule() {
+    try {
+        const resp = await fetch('/api/schedule');
+        if (!resp.ok) return;
+        scheduleData = await resp.json();
+        renderSchedule();
+    } catch(e) { console.error(e); }
+}
+function renderSchedule() {
+    const tbody = document.getElementById('scheduleBody');
+    if (!scheduleData.length) {
+        // Show defaults
+        scheduleData = DAYS.map(d => ({day:d, on_time:'07:00', off_time:'23:00', enabled:true}));
+    }
+    tbody.innerHTML = scheduleData.map((s, i) => `<tr>
+        <td>${DAY_NAMES[s.day] || s.day}</td>
+        <td><input type="time" value="${s.on_time}" onchange="scheduleData[${i}].on_time=this.value"></td>
+        <td><input type="time" value="${s.off_time}" onchange="scheduleData[${i}].off_time=this.value"></td>
+        <td><label class="toggle"><input type="checkbox" ${s.enabled?'checked':''} onchange="scheduleData[${i}].enabled=this.checked"><span class="toggle-slider"></span></label></td>
+    </tr>`).join('');
+}
+async function saveSchedule() {
+    await fetch('/api/schedule', {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(scheduleData)});
+    alert('Schedule saved');
+}
+async function overrideAction(action) {
+    await fetch('/api/schedule/override', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action})});
+    alert('Override: ' + action);
+}
+loadSchedule();
+</script>
+{% endblock %}

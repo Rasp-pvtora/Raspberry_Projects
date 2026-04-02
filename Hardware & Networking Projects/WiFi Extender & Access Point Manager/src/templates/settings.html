@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block title %}Settings — WiFi AP Manager{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>⚙️ Feature Toggles</h3>
+        <button class="btn btn-sm btn-primary" onclick="saveToggles()">Save All</button>
+    </div>
+    <div class="card-body">
+        <div class="toggle-grid" id="toggleGrid">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>📛 SSID & Password</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label>SSID (Network Name)</label>
+            <input type="text" id="cfgSSID" placeholder="RaspberryPi-AP">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="cfgPassword" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+            <label>Channel</label>
+            <select id="cfgChannel">
+                <option value="auto">Auto</option>
+                {% for c in range(1, 14) %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="toggle">
+                <input type="checkbox" id="cfgHidden">
+                <span class="toggle-slider"></span>
+                Hidden SSID
+            </label>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-primary" onclick="saveAPConfig()">Save & Restart AP</button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>🔑 Change Password</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" id="currentPass">
+        </div>
+        <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPass">
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-warning" onclick="changePassword()">Change Password</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WiFi AP Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-logo">📡</span>
+                <h2>WiFi AP Manager</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">
+                    <span class="nav-icon">📊</span> Dashboard</a></li>
+                <li><a href="/clients" class="{% if request.path == '/clients' %}active{% endif %}">
+                    <span class="nav-icon">👥</span> Clients</a></li>
+                <li><a href="/bandwidth" class="{% if request.path == '/bandwidth' %}active{% endif %}">
+                    <span class="nav-icon">📈</span> Bandwidth</a></li>
+                <li><a href="/mac-filter" class="{% if request.path == '/mac-filter' %}active{% endif %}">
+                    <span class="nav-icon">🛡️</span> MAC Filter</a></li>
+                <li><a href="/qos" class="{% if request.path == '/qos' %}active{% endif %}">
+                    <span class="nav-icon">⚡</span> QoS</a></li>
+                <li><a href="/schedule" class="{% if request.path == '/schedule' %}active{% endif %}">
+                    <span class="nav-icon">🕐</span> Schedule</a></li>
+                <li><a href="/dns" class="{% if request.path == '/dns' %}active{% endif %}">
+                    <span class="nav-icon">🔗</span> DNS</a></li>
+                <li><a href="/health" class="{% if request.path == '/health' %}active{% endif %}">
+                    <span class="nav-icon">💚</span> Health</a></li>
+                <li><a href="/connection-log" class="{% if request.path == '/connection-log' %}active{% endif %}">
+                    <span class="nav-icon">📋</span> Conn. Log</a></li>
+                <li><a href="/captive-portal" class="{% if request.path == '/captive-portal' %}active{% endif %}">
+                    <span class="nav-icon">🌐</span> Captive Portal</a></li>
+                <li><a href="/settings" class="{% if request.path == '/settings' %}active{% endif %}">
+                    <span class="nav-icon">⚙️</span> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-sm btn-danger">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+                <div class="top-bar-right">
+                    <span class="health-indicator" id="healthDot" title="Internet Status">●</span>
+                </div>
+            </header>
+            <div class="content-area">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

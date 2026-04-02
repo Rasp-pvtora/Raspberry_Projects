@@ -1,0 +1,2 @@
+# MAC Blacklist — one MAC address per line
+# Example: AA:BB:CC:DD:EE:FF

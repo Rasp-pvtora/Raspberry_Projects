@@ -1,0 +1,2 @@
+# MAC Whitelist — one MAC address per line
+# Example: AA:BB:CC:DD:EE:FF

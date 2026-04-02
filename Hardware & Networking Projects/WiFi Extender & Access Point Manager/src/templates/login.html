@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — WiFi AP Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <span class="login-logo">📡</span>
+                <h1>WiFi AP Manager</h1>
+                <p>Sign in to continue</p>
+            </div>
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autofocus
+                           autocomplete="username" placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required
+                           autocomplete="current-password" placeholder="••••••••">
+                </div>
+                <div id="loginError" class="error-msg" style="display:none;"></div>
+                <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>
+    async function handleLogin(e) {
+        e.preventDefault();
+        const btn = document.getElementById('loginBtn');
+        const errDiv = document.getElementById('loginError');
+        btn.disabled = true;
+        btn.textContent = 'Signing in...';
+        errDiv.style.display = 'none';
+
+        try {
+            const resp = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value,
+                }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                window.location.href = '/';
+            } else {
+                errDiv.textContent = data.error || 'Login failed';
+                errDiv.style.display = 'block';
+            }
+        } catch (err) {
+            errDiv.textContent = 'Connection error';
+            errDiv.style.display = 'block';
+        }
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+    }
+    </script>
+</body>
+</html>

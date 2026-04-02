@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Captive Portal — WiFi AP Manager{% endblock %}
+{% block page_title %}Captive Portal{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>🌐 Captive Portal Settings</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label>Portal Title</label>
+            <input type="text" id="portalTitle" value="Welcome">
+        </div>
+        <div class="form-group">
+            <label>Welcome Message</label>
+            <textarea id="portalMessage" rows="3">Accept terms to connect</textarea>
+        </div>
+        <div class="form-group">
+            <label>Portal Password (leave empty for terms-only)</label>
+            <input type="password" id="portalPassword" placeholder="Optional password">
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>👁️ Portal Preview</h3>
+    </div>
+    <div class="card-body">
+        <div class="portal-preview" id="portalPreview">
+            <div class="portal-preview-inner">
+                <h2 id="previewTitle">Welcome</h2>
+                <p id="previewMessage">Accept terms to connect</p>
+                <button class="btn btn-primary">Accept & Connect</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('portalTitle').addEventListener('input', function() {
+    document.getElementById('previewTitle').textContent = this.value;
+});
+document.getElementById('portalMessage').addEventListener('input', function() {
+    document.getElementById('previewMessage').textContent = this.value;
+});
+</script>
+{% endblock %}

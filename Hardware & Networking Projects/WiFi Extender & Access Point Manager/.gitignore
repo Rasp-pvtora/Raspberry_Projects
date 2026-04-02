@@ -1,0 +1,46 @@
+# ──────────────────────────────────────
+# WiFi Extender & Access Point Manager
+# ──────────────────────────────────────
+
+# Environment & secrets
+.env
+certs/
+*.pem
+*.key
+*.crt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Database
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage

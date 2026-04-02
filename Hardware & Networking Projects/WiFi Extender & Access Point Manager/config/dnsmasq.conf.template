@@ -1,0 +1,4 @@
+interface={{AP_INTERFACE}}
+dhcp-range={{DHCP_RANGE_START}},{{DHCP_RANGE_END}},{{DHCP_LEASE_TIME}}
+server={{DNS_PRIMARY}}
+server={{DNS_SECONDARY}}

@@ -1,0 +1,24 @@
+[Unit]
+Description=WiFi Extender & Access Point Manager
+After=network.target hostapd.service dnsmasq.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/Raspberry_Projects/Hardware & Networking Projects/WiFi Extender & Access Point Manager
+Environment=PATH=/opt/Raspberry_Projects/Hardware & Networking Projects/WiFi Extender & Access Point Manager/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+ExecStart=/opt/Raspberry_Projects/Hardware & Networking Projects/WiFi Extender & Access Point Manager/venv/bin/python src/app.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=false
+ProtectSystem=false
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
